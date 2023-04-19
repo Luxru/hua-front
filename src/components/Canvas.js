@@ -1,18 +1,23 @@
 // src/components/Canvas.js
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const Canvas = ({draw, height, width}) => {
+const Canvas = ({ draw, height, width }) => {
   const canvas = React.useRef(null);
 
   React.useEffect(() => {
-    const context = canvas.current.getContext('2d');
+    const context = canvas.current.getContext("2d");
     draw(context);
   });
 
   return (
-    <canvas ref={canvas} height={height} width={width} style={{border: "1px solid black"}} />
+    <canvas
+      ref={canvas}
+      height={height}
+      width={width}
+      style={{ border: "1px solid black" }}
+    />
   );
 };
 
