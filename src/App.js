@@ -1,6 +1,6 @@
-import Header from "./components/Header";
-import Panel from "./components/Panel";
-import Footer from "./components/Footer";
+import Header from "./Header";
+import Panel from "./Panel";
+import Footer from "./Footer";
 
 function App() {
   return (
