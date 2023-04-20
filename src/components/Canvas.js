@@ -13,10 +13,10 @@ const Canvas = ({ draw, height, width }) => {
 
   return (
     <canvas
+      class="border border-black"
       ref={canvas}
       height={height}
       width={width}
-      style={{ border: "1px solid black" }}
     />
   );
 };

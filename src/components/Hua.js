@@ -115,8 +115,8 @@ function HuaTypeS() {
         drawCorImages(ctx, images[1]);
         drawBorImages(ctx, images[2], images[0]);
       }}
-      height={318}
-      width={318}
+      height={300}
+      width={300}
     />
   );
 }
