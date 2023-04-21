@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Canvas from "./Canvas";
 
 function drawCenImage(ctx, image) {
@@ -109,35 +110,25 @@ async function loadImages(){
 }
 
 function HuaTypeS({ numberImage,canvasHW}) {
-
-  const draw = async (context) => {
-    context.clearRect(0, 0, canvasHW, canvasHW);
-    const resultImage = new Image();
+  const [imgURL,setimgURL] = useState("")
+ 
+  useEffect(()=>{
     loadImages().then(
      (images)=>{
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       canvas.width = 300;
       canvas.height = 300;
-      
       // 绘制图片到Canvas上
       // 需要绘制制定的样式
       drawCenImage(ctx, images[0]);
       drawCorImages(ctx, images[1]);
       drawBorImages(ctx, images[2], images[0]);
-      resultImage.src = canvas.toDataURL();
-      const tHW = resultImage.height/numberImage;
-      for(let i=0;i<numberImage;i++){
-        for(let j=0;j<numberImage;j++){
-         context.drawImage(resultImage,i*tHW,j*tHW,tHW,tHW);
-        }
-      }
-      console.log("end draw")
-     }
-    )
-  };
+      setimgURL(canvas.toDataURL());
+     });
+  })
 
-  return <Canvas draw={draw} height={canvasHW} width={canvasHW} />;
+  return <Canvas imgURL={imgURL}  HW={canvasHW} numberImage={numberImage} />;
 }
 
 export default HuaTypeS;

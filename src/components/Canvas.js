@@ -1,30 +1,30 @@
 // src/components/Canvas.js
 
-import React from "react";
-import PropTypes from "prop-types";
+import { useEffect, useRef } from "react";
 
-const Canvas = ({ draw, height, width }) => {
-  const canvas = React.useRef(null);
+const Canvas = ({ numberImage, HW, imgURL }) => {
+  const canvas = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const context = canvas.current.getContext("2d");
-    draw(context);
+    const tHW = 300 / numberImage;
+    const resultImage = new Image();
+    resultImage.src = imgURL;
+    resultImage.onload = () => {
+      for (let i = 0; i < numberImage; i++) {
+        for (let j = 0; j < numberImage; j++) {
+          context.drawImage(resultImage, i * tHW, j * tHW, tHW, tHW);
+        }
+      }
+    }
+    return () => {
+      context.clearRect(0, 0, HW, HW);
+    };
   });
 
   return (
-    <canvas
-      class="border border-black"
-      ref={canvas}
-      height={height}
-      width={width}
-    />
+    <canvas class="border border-black" ref={canvas} height={HW} width={HW} />
   );
-};
-
-Canvas.propTypes = {
-  draw: PropTypes.func.isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
 };
 
 export default Canvas;

@@ -33,7 +33,7 @@ function HuaButtonGroup({ numButton,setIndex }) {
   var buttonArray = [];
   for (let i = 0; i < numButton; i++) {
     buttonArray.push(
-      <HuaButton idClicked={idClicked} onClick={onClick} id={id + String(i)} index={i}/>
+      <HuaButton key={i} idClicked={idClicked} onClick={onClick} id={id + String(i)} index={i}/>
     );
   }
   return <div>{buttonArray}</div>;
@@ -41,7 +41,7 @@ function HuaButtonGroup({ numButton,setIndex }) {
 
 
 HuaButtonGroup.propTypes = {
-    setIndex: PropTypes.func.isRequired,
+    // setIndex: PropTypes.func.isRequired,
     numButton: PropTypes.number.isRequired,
 };
   
