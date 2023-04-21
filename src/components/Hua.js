@@ -7,7 +7,7 @@ function drawCenImage(ctx, image) {
   const imageX = centerX - image.naturalWidth / 2;
   const imageY = centerY - image.naturalHeight / 2;
 
-  ctx.drawImage(image, imageX, imageY, image.naturalWidth, image.naturalHeight);
+  ctx.drawImage(image, imageX, imageY);
 }
 
 function rotateImage(image, angle) {
@@ -91,34 +91,53 @@ function drawBorImages(ctx, bor_image, cen_image) {
   ctx.restore();
 }
 
-function HuaTypeS() {
-  return (
-    <Canvas
-      draw={async (ctx) => {
-        const imageURLs = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
-        // 创建一个Promise数组，每个Promise表示一张图片的加载
-        const imagePromises = imageURLs.map((url) => {
-          return new Promise((resolve, reject) => {
-            const image = new Image();
-            image.onload = () => resolve(image);
-            image.onerror = reject;
-            image.src = url;
-          });
-        });
+async function loadImages(){
+  const imageURLs = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
+  // 创建一个Promise数组，每个Promise表示一张图片的加载
+  const imagePromises = imageURLs.map((url) => {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = url;
+    });
+  });
 
-        // 等待所有图片加载完成
-        const images = await Promise.all(imagePromises);
+  // 等待所有图片加载完成
+  const images = await Promise.all(imagePromises);
+  return images;
+}
 
-        // 绘制图片到Canvas上
-        // 需要绘制制定的样式
-        drawCenImage(ctx, images[0]);
-        drawCorImages(ctx, images[1]);
-        drawBorImages(ctx, images[2], images[0]);
-      }}
-      height={300}
-      width={300}
-    />
-  );
+function HuaTypeS({ numberImage,canvasHW}) {
+
+  const draw = async (context) => {
+    context.clearRect(0, 0, canvasHW, canvasHW);
+    const resultImage = new Image();
+    loadImages().then(
+     (images)=>{
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = 300;
+      canvas.height = 300;
+      
+      // 绘制图片到Canvas上
+      // 需要绘制制定的样式
+      drawCenImage(ctx, images[0]);
+      drawCorImages(ctx, images[1]);
+      drawBorImages(ctx, images[2], images[0]);
+      resultImage.src = canvas.toDataURL();
+      const tHW = resultImage.height/numberImage;
+      for(let i=0;i<numberImage;i++){
+        for(let j=0;j<numberImage;j++){
+         context.drawImage(resultImage,i*tHW,j*tHW,tHW,tHW);
+        }
+      }
+      console.log("end draw")
+     }
+    )
+  };
+
+  return <Canvas draw={draw} height={canvasHW} width={canvasHW} />;
 }
 
 export default HuaTypeS;

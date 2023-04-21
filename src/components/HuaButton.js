@@ -1,6 +1,6 @@
 import footer_img from "../asset/footer_menu.svg";
 import footer_clicked_img from "../asset/footer_menu_red.svg";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import PropTypes from "prop-types";
 
 function HuaButton(props) {
@@ -8,7 +8,7 @@ function HuaButton(props) {
 
   return (
     <button
-      class="w-fit hover:bg-gray-200 rounded-md p-1 inline-block"
+      class="w-fit hover:bg-gray-200 active:bg-gray-400 rounded-md p-1 inline-block"
       id={id}
       onClick={onClick}
     >
@@ -21,6 +21,9 @@ function HuaButton(props) {
 function HuaButtonGroup({ numButton,setIndex }) {
   const [idClicked, setidClicked] = useState(false);
   const id = useId();
+  useEffect(()=>{
+    setidClicked(id + String(0))
+  },[id]);
   const onClick = (event) => {
     if(setIndex !== undefined){
         setIndex(setIndex(event.currentTarget.index))
