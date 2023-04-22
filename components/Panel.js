@@ -1,12 +1,12 @@
-import Hua from "./components/Hua";
-import menu_ico from "./asset/menu_ico.svg";
-import HuaButtonGroup from "./components/HuaButton";
+import Hua from "@/components/Hua";
+import HuaButtonGroup from "@/components/HuaButton";
+import menu_ico from "@/public/assets/menu_ico.svg";
 import { useState } from "react";
-
+import Image from "next/image";
 function Info({info}){
 return (
     <div className="space-x-2">
-    <img className="inline-block" src={menu_ico} alt="menu_ico" />
+    <Image className="inline-block" src={menu_ico} alt="menu_ico" />
     <p className="inline-block font-FZLT text-2xl">{info}</p>
     </div>
 )

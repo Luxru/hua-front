@@ -1,5 +1,3 @@
-// src/components/Canvas.js
-
 import { useEffect, useRef } from "react";
 
 const Canvas = ({ numberImage, HW, imgURL }) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Canvas from "./Canvas";
+import Canvas from "@/components/Canvas";
 
 function drawCenImage(ctx, image) {
   const centerX = ctx.canvas.width / 2;
@@ -110,7 +110,6 @@ async function loadImages(imageURLs){
 
 function Hua({numberImage,canvasHW,typeHua}) {
   if(typeHua==='s'||typeHua==='S'){
-    console.log("Type S");
   }
   const [imgURL,setimgURL] = useState("")
   const [cenImg,corImg,borImg] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];

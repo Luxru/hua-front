@@ -1,7 +1,8 @@
-import footer_img from "../asset/footer_menu.svg";
-import footer_clicked_img from "../asset/footer_menu_red.svg";
+import footer_img from "@/public/assets/footer_menu.svg";
+import footer_clicked_img from "@/public/assets/footer_menu_red.svg";
 import { useEffect, useId, useState } from "react";
 import PropTypes from "prop-types";
+import Image from "next/image";
 
 function HuaButton(props) {
   const { id, onClick, idClicked } = props;
@@ -12,7 +13,7 @@ function HuaButton(props) {
       id={id}
       onClick={onClick}
     >
-      <img src={idClicked === id ? footer_clicked_img : footer_img} alt={""} />
+      <Image src={idClicked === id ? footer_clicked_img : footer_img} alt={""} />
     </button>
   );
 }
