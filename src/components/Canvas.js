@@ -7,7 +7,8 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
 
   useEffect(() => {
     const context = canvas.current.getContext("2d");
-    const tHW = 300 / numberImage;
+    context.clearRect(0, 0, HW, HW);
+    const tHW = HW / numberImage;
     const resultImage = new Image();
     resultImage.src = imgURL;
     resultImage.onload = () => {
@@ -18,12 +19,11 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
       }
     }
     return () => {
-      context.clearRect(0, 0, HW, HW);
     };
-  });
+  },[imgURL,HW,numberImage]);
 
   return (
-    <canvas class="border border-black" ref={canvas} height={HW} width={HW} />
+    <canvas className="border border-black" ref={canvas} height={HW} width={HW} />
   );
 };
 

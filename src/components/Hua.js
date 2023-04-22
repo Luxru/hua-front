@@ -92,8 +92,7 @@ function drawBorImages(ctx, bor_image, cen_image) {
   ctx.restore();
 }
 
-async function loadImages(){
-  const imageURLs = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
+async function loadImages(imageURLs){
   // 创建一个Promise数组，每个Promise表示一张图片的加载
   const imagePromises = imageURLs.map((url) => {
     return new Promise((resolve, reject) => {
@@ -109,26 +108,29 @@ async function loadImages(){
   return images;
 }
 
-function HuaTypeS({ numberImage,canvasHW}) {
+function Hua({numberImage,canvasHW,typeHua}) {
+  if(typeHua==='s'||typeHua==='S'){
+    console.log("Type S");
+  }
   const [imgURL,setimgURL] = useState("")
- 
+  const [cenImg,corImg,borImg] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
   useEffect(()=>{
-    loadImages().then(
-     (images)=>{
+    loadImages([cenImg,corImg,borImg]).then(
+      (images)=>{
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-      canvas.width = 300;
-      canvas.height = 300;
+      canvas.width = 318;
+      canvas.height = 318;
       // 绘制图片到Canvas上
       // 需要绘制制定的样式
       drawCenImage(ctx, images[0]);
       drawCorImages(ctx, images[1]);
       drawBorImages(ctx, images[2], images[0]);
       setimgURL(canvas.toDataURL());
-     });
-  })
+     }).catch((res)=>console.warn(res));
+  },[cenImg,corImg,borImg])
 
   return <Canvas imgURL={imgURL}  HW={canvasHW} numberImage={numberImage} />;
 }
 
-export default HuaTypeS;
+export default Hua;

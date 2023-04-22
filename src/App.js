@@ -4,15 +4,15 @@ import Footer from "./Footer";
 
 function App() {
   return (
-    <div class="bg-slate-100">
-      <div class="bg-white min-h-screen w-4/5 grid grid-flow-row shadow-xl mx-auto overflow-auto rounded-2xl">
-        <div class="self-start">
+    <div className="bg-slate-100">
+      <div className="bg-white min-h-screen w-4/5 grid grid-flow-row shadow-xl mx-auto overflow-auto rounded-2xl">
+        <div className="self-start">
           <Header />
         </div>
-        <div class="self-center">
+        <div className="self-center">
           <Panel />
         </div>
-        <div class="self-end">
+        <div className="self-end">
           <Footer />
         </div>
       </div>
