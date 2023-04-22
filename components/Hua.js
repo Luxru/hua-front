@@ -1,6 +1,22 @@
 import { useEffect, useState } from "react";
 import Canvas from "@/components/Canvas";
 
+async function loadImages(imageURLs){
+  // 创建一个Promise数组，每个Promise表示一张图片的加载
+  const imagePromises = imageURLs.map((url) => {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = url;
+    });
+  });
+
+  // 等待所有图片加载完成
+  const images = await Promise.all(imagePromises);
+  return images;
+}
+
 function drawCenImage(ctx, image) {
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
@@ -32,43 +48,29 @@ function rotateImage(image, angle) {
   // 在canvas上绘制旋转后的图像
   ctx.drawImage(image, -canvas.width / 2, -canvas.height / 2);
 
-  // 将canvas上的图像绘制到主canvas上
-  const resultImage = new Image();
-  resultImage.src = canvas.toDataURL();
-  return resultImage;
+  return  canvas.toDataURL();
 }
 
-function drawCorImages(ctx, image) {
-  // 将画布状态保存下来
-  ctx.save();
-  // console.log("Img w h",image.naturalWidth,image.naturalHeight);
-  // 分别绘制四个角的图片
-  for (let i = 0; i < 4; i++) {
-    // 将画布坐标系原点移动到对应角落
-    var img = null;
-    if (i === 0) {
+async function drawCorImages(ctx, image) {
+  const imgSrcArr = [rotateImage(image, 0),rotateImage(image, 90),rotateImage(image, 270),rotateImage(image, 180)]
+  const imgArr = await loadImages(imgSrcArr);
+  imgArr.map((img,index)=>{
+    ctx.save();
+    if (index === 0) {
       ctx.translate(0, 0);
-      img = rotateImage(image, 0);
-    } else if (i === 1) {
+    } else if (index === 1) {
       ctx.translate(ctx.canvas.width - image.naturalWidth, 0);
-      img = rotateImage(image, 90);
-    } else if (i === 2) {
+    } else if (index === 2) {
       ctx.translate(0, ctx.canvas.height - image.naturalHeight);
-      img = rotateImage(image, 270);
-    } else if (i === 3) {
+    } else if (index === 3) {
       ctx.translate(
         ctx.canvas.width - image.naturalWidth,
         ctx.canvas.height - image.naturalHeight
       );
-      img = rotateImage(image, 180);
     }
-    // 将图片绘制到画布上
-    ctx.drawImage(img, 0, 0, image.naturalWidth, image.naturalHeight);
-    // 恢复画布状态
+    ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
     ctx.restore();
-    // 保存画布状态，以便绘制下一个角落的图片
-    ctx.save();
-  }
+  })
 }
 
 function drawBorImages(ctx, bor_image, cen_image) {
@@ -92,21 +94,7 @@ function drawBorImages(ctx, bor_image, cen_image) {
   ctx.restore();
 }
 
-async function loadImages(imageURLs){
-  // 创建一个Promise数组，每个Promise表示一张图片的加载
-  const imagePromises = imageURLs.map((url) => {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => resolve(image);
-      image.onerror = reject;
-      image.src = url;
-    });
-  });
 
-  // 等待所有图片加载完成
-  const images = await Promise.all(imagePromises);
-  return images;
-}
 
 function Hua({numberImage,canvasHW,typeHua}) {
   if(typeHua==='s'||typeHua==='S'){
@@ -114,20 +102,23 @@ function Hua({numberImage,canvasHW,typeHua}) {
   const [imgURL,setimgURL] = useState("")
   const [cenImg,corImg,borImg] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
   useEffect(()=>{
-    loadImages([cenImg,corImg,borImg]).then(
-      (images)=>{
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = 318;
-      canvas.height = 318;
-      // 绘制图片到Canvas上
-      // 需要绘制制定的样式
-      drawCenImage(ctx, images[0]);
-      drawCorImages(ctx, images[1]);
-      drawBorImages(ctx, images[2], images[0]);
-      setimgURL(canvas.toDataURL());
-     }).catch((res)=>console.warn(res));
-  },[cenImg,corImg,borImg])
+      const f = async ()=>{
+        const [cenLoaded,corLoaded,borLoaded] = await loadImages([cenImg,corImg,borImg]);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 318;
+        canvas.height = 318;
+        // 中心
+        drawCenImage(ctx, cenLoaded);
+        // 中心周围
+        drawBorImages(ctx, borLoaded, cenLoaded);
+        // 四角
+        await drawCorImages(ctx, corLoaded);
+        setimgURL(canvas.toDataURL());
+      }
+      f();
+     }
+  ,[cenImg,corImg,borImg])
 
   return <Canvas imgURL={imgURL}  HW={canvasHW} numberImage={numberImage} />;
 }
