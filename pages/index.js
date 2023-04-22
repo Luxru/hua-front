@@ -9,8 +9,8 @@ export default function Home() {
       <Head>
         <title>Hua App</title>
       </Head>
-      <div className="bg-slate-100">
-      <div className="bg-white min-h-screen w-4/5 grid grid-flow-row shadow-xl mx-auto overflow-auto rounded-2xl">
+      <div className="bg-slate-100 min-h-screen h-screen flex items-center justify-center">
+      <div className="bg-white h-5/6 w-4/5 grid grid-flow-row shadow-2xl overflow-auto rounded-2xl">
         <div className="self-start">
           <Header />
         </div>
