@@ -9,7 +9,7 @@ function HuaButton(props) {
 
   return (
     <button
-      className="w-fit hover:bg-gray-200 active:bg-gray-400 rounded-md p-1 inline-block"
+      className="w-fit hover:bg-gray-200 active:bg-gray-100 rounded-md p-1 inline-block"
       id={id}
       onClick={onClick}
     >
