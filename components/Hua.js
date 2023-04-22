@@ -75,14 +75,15 @@ async function drawCorImages(ctx, image) {
 
 function drawBorImages(ctx, bor_image, cen_image) {
   ctx.save();
+  const numBor = 8;
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
 
   const imageX = centerX;
   const imageY = centerY;
   ctx.translate(imageX, imageY);
-  for (var i = 0; i < 9; i++) {
-    ctx.rotate((40 * Math.PI) / 180);
+  for (var i = 0; i < numBor; i++) {
+    ctx.rotate(((360/numBor) * Math.PI) / 180);
     ctx.drawImage(
       bor_image,
       -bor_image.naturalWidth / 2,

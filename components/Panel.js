@@ -1,8 +1,12 @@
 import Hua from "@/components/Hua";
 import HuaButtonGroup from "@/components/HuaButton";
 import menu_ico from "@/public/assets/menu_ico.svg";
+import down_arrow from "@/public/assets/down_arrow.svg"
+import up_arrow from "@/public/assets/up_arrow.svg"
+
 import { useState } from "react";
 import Image from "next/image";
+
 function Info({info}){
 return (
     <div className="space-x-2">
@@ -51,9 +55,11 @@ export default function Panel() {
       <div className="grid items-center grid-cols-3">
         <Info info="排布"/>
         <div className='flex'>
-          <p className='bg-gray-300 p-1 text-center font-bold w-12 rounded-md'>{numberImage}x{numberImage}</p>
-          <button onClick={onClickIncreaseNum} className='bg-emerald-800 active:bg-emerald-900 text-white rounded-md w-12 mx-2'>增加</button>
-          <button onClick={onClickDecreaseNum} className='bg-red-800 active:bg-red-900  text-white shadow-sm rounded-md w-12'>减少</button>
+          <div className="grid grid-rows-2 grid-cols-4 grid-flow-row border-4 border-black">
+          <p className='text-center text-xl font-FZLT row-span-2 col-span-3 place-self-center'>{numberImage}x{numberImage}</p>
+          <Image src={up_arrow} alt={"up_arrow"} onClick={onClickIncreaseNum} className="active:opacity-40 active:bg-gray-100 hover:bg-gray-200 rounded-lg"/>
+          <Image src={down_arrow} alt={"down_arrow"} onClick={onClickDecreaseNum} className="active:opacity-40 active:bg-gray-100 hover:bg-gray-200 rounded-lg"/>
+          </div>
         </div>
         <CheckBoxGroup/> 
 
