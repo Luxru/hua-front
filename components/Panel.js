@@ -28,6 +28,8 @@ function CheckBoxGroup(){
 export default function Panel() {
   const [numberImage,setNumberImage] = useState(1);
   const [canvasHW,setCanvasHW] = useState(300);
+  const [cenImgSrc,corImgSrc,borImgSrc] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
+
   const onClickIncreaseNum = ()=>{
     setNumberImage(numberImage+1);
     setCanvasHW(canvasHW);
@@ -43,7 +45,7 @@ export default function Panel() {
     <div className="grid grid-flow-col">
       
       <div className="justify-self-center">
-          <Hua numberImage={numberImage} canvasHW={canvasHW} typeHua={'s'}/>
+          <Hua numberImage={numberImage} canvasHW={canvasHW} typeHua={'s'} cenImgSrc={cenImgSrc} corImgSrc={corImgSrc} borImgSrc={borImgSrc}/>
       </div>
 
       <div className="grid items-center grid-cols-3">

@@ -96,29 +96,28 @@ function drawBorImages(ctx, bor_image, cen_image) {
 
 
 
-function Hua({numberImage,canvasHW,typeHua}) {
+function Hua({numberImage,canvasHW,typeHua,cenImgSrc,corImgSrc,borImgSrc}) {
   if(typeHua==='s'||typeHua==='S'){
   }
   const [imgURL,setimgURL] = useState("")
-  const [cenImg,corImg,borImg] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
   useEffect(()=>{
       const f = async ()=>{
-        const [cenLoaded,corLoaded,borLoaded] = await loadImages([cenImg,corImg,borImg]);
+        const [cenImg,corImg,borImg] = await loadImages([cenImgSrc,corImgSrc,borImgSrc]);
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         canvas.width = 318;
         canvas.height = 318;
         // 中心
-        drawCenImage(ctx, cenLoaded);
+        drawCenImage(ctx, cenImg);
         // 中心周围
-        drawBorImages(ctx, borLoaded, cenLoaded);
+        drawBorImages(ctx, borImg, cenImg);
         // 四角
-        await drawCorImages(ctx, corLoaded);
+        await drawCorImages(ctx, corImg);
         setimgURL(canvas.toDataURL());
       }
       f();
      }
-  ,[cenImg,corImg,borImg])
+  ,[cenImgSrc,corImgSrc,borImgSrc])
 
   return <Canvas imgURL={imgURL}  HW={canvasHW} numberImage={numberImage} />;
 }
