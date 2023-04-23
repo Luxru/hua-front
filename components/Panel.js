@@ -16,28 +16,18 @@ return (
 )
 };
 
-function CheckBox({color}){
-  return (<div className={color+' rounded-full w-8 h-8 inline-block opacity-50 active:opacity-100'}/>)
-}
-function CheckBoxGroup(){
-  return (
-  <div className="flex space-x-2">
-        <CheckBox color="bg-panel-blue"/>
-        <CheckBox color="bg-panel-green"/>
-        <CheckBox color="bg-panel-yellow"/>
-        <CheckBox color="bg-panel-red"/>
-  </div>)
-}
 
 export default function Panel() {
   const [numberImage,setNumberImage] = useState(1);
   const [canvasHW,setCanvasHW] = useState(300);
   const [cenImgSrc,corImgSrc,borImgSrc] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
+  const colorArr = ["bg-panel-blue","bg-panel-green","bg-panel-yellow","bg-panel-red"]
 
   const onClickIncreaseNum = ()=>{
     setNumberImage(numberImage+1);
     setCanvasHW(canvasHW);
   }
+
   const onClickDecreaseNum = ()=>{
     var num = 1;
     if(numberImage-1>1){
@@ -45,36 +35,36 @@ export default function Panel() {
     }
     setNumberImage(num);
   }
+
   return (
-    <div className="grid grid-flow-col">
+    <div className="grid grid-cols-1 lg:grid-cols-2">
       
       <div className="justify-self-center">
           <Hua numberImage={numberImage} canvasHW={canvasHW} typeHua={'s'} cenImgSrc={cenImgSrc} corImgSrc={corImgSrc} borImgSrc={borImgSrc}/>
       </div>
 
-      <div className="grid items-center grid-cols-3">
+      <div className="grid items-center space-y-2 grid-cols-3 lg:space-y-0">
         <Info info="排布"/>
-        <div className='flex'>
+        <div className='flex col-span-2'>
           <div className="grid grid-rows-2 grid-cols-4 grid-flow-row border-4 border-black">
           <p className='text-center text-xl font-FZLT row-span-2 col-span-3 place-self-center'>{numberImage}x{numberImage}</p>
           <Image src={up_arrow} alt={"up_arrow"} onClick={onClickIncreaseNum} className="active:opacity-40 active:bg-gray-100 hover:bg-gray-200 rounded-lg"/>
           <Image src={down_arrow} alt={"down_arrow"} onClick={onClickDecreaseNum} className="active:opacity-40 active:bg-gray-100 hover:bg-gray-200 rounded-lg"/>
           </div>
         </div>
-        <CheckBoxGroup/> 
 
 
         <Info info="花心"/>
-        <HuaButtonGroup numButton={2}/>
-        <CheckBoxGroup/>
+        <HuaButtonGroup numButton={2} typeButton={'Hua'}/>
+        <HuaButtonGroup numButton={4} typeButton={'Color'} colorArr={colorArr}/>
 
         <Info info="花瓣"/>
-        <HuaButtonGroup numButton={3}/>
-        <CheckBoxGroup/>
+        <HuaButtonGroup numButton={3} typeButton={'Hua'}/>
+        <HuaButtonGroup numButton={4} typeButton={'Color'} colorArr={colorArr}/>
 
         <Info info="角隅"/>
-        <HuaButtonGroup numButton={2}/>
-        <CheckBoxGroup/>
+        <HuaButtonGroup numButton={2} typeButton={'Hua'}/>
+        <HuaButtonGroup numButton={4} typeButton={'Color'} colorArr={colorArr}/>
         {/* <Info info="边饰"/> */}
       </div>
     </div>

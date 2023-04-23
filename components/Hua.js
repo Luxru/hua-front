@@ -17,16 +17,6 @@ async function loadImages(imageURLs){
   return images;
 }
 
-function drawCenImage(ctx, image) {
-  const centerX = ctx.canvas.width / 2;
-  const centerY = ctx.canvas.height / 2;
-
-  const imageX = centerX - image.naturalWidth / 2;
-  const imageY = centerY - image.naturalHeight / 2;
-
-  ctx.drawImage(image, imageX, imageY);
-}
-
 function rotateImage(image, angle) {
   // 不考虑旋转不是90度的倍数的情况
   // 创建一个临时的canvas
@@ -78,10 +68,7 @@ function drawBorImages(ctx, bor_image, cen_image) {
   const numBor = 8;
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
-
-  const imageX = centerX;
-  const imageY = centerY;
-  ctx.translate(imageX, imageY);
+  ctx.translate(centerX, centerY);
   for (var i = 0; i < numBor; i++) {
     ctx.rotate(((360/numBor) * Math.PI) / 180);
     ctx.drawImage(
@@ -95,6 +82,15 @@ function drawBorImages(ctx, bor_image, cen_image) {
   ctx.restore();
 }
 
+
+function drawCenImage(ctx, image) {
+  ctx.save();
+  const centerX = ctx.canvas.width / 2;
+  const centerY = ctx.canvas.height / 2;
+  ctx.translate(centerX, centerY);
+  ctx.drawImage(image, -image.naturalWidth/2, -image.naturalWidth/2,image.naturalWidth,image.naturalWidth);
+  ctx.restore();
+}
 
 
 function Hua({numberImage,canvasHW,typeHua,cenImgSrc,corImgSrc,borImgSrc}) {
