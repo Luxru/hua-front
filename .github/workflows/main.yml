@@ -8,6 +8,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    types: [closed]
+    
 
 jobs:
   build:
@@ -42,7 +44,7 @@ jobs:
           TARGET: "/home/${{ secrets.REMOTE_USER }}/${{ github.repository }}/"
           SCRIPT_BEFORE: |
             whoami
-            cd /home/${{ secrets.REMOTE_USER }}/${{ github.repository }}/
+            cd /home/${{ secrets.REMOTE_USER }}/hua-front/
             ls -al
             rm -rf ./out
             ls -al
