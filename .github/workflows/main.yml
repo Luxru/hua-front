@@ -44,13 +44,11 @@ jobs:
           TARGET: "/home/${{ secrets.REMOTE_USER }}/hua-front/"
           SCRIPT_BEFORE: |
             whoami
+            
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
             ls -al
-            cp -r ./out ./out.bak
-            ls -al
+            echo "------------------------------"
           SCRIPT_AFTER: |
             whoami
-            ls -al
-            rm -rf ./out.bak
             ls -al
             echo $RSYNC_STDOUT
