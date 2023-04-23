@@ -19,7 +19,7 @@ return (
 
 export default function Panel() {
   const [numberImage,setNumberImage] = useState(1);
-  const [canvasHW,setCanvasHW] = useState(300);
+  const [canvasHW,setCanvasHW] = useState(400);
   const [cenImgSrc,corImgSrc,borImgSrc] = ["/thua/cen.svg", "/thua/cor.svg", "/thua/bor.svg"];
   const colorArr = ["bg-panel-blue","bg-panel-green","bg-panel-yellow","bg-panel-red"]
 
