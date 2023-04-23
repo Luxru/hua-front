@@ -15,13 +15,17 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
           context.drawImage(resultImage, i * tHW, j * tHW, tHW, tHW);
         }
       }
-    }
-    return () => {
     };
-  },[imgURL,HW,numberImage]);
+    return () => {};
+  }, [imgURL, HW, numberImage]);
 
   return (
-    <canvas className="border border-black" ref={canvas} height={HW} width={HW} />
+    <canvas
+      className="border border-black"
+      ref={canvas}
+      height={HW}
+      width={HW}
+    />
   );
 };
 

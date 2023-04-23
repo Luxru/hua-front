@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Canvas from "@/components/Canvas";
 
-async function loadImages(imageURLs){
+async function loadImages(imageURLs) {
   // 创建一个Promise数组，每个Promise表示一张图片的加载
   const imagePromises = imageURLs.map((url) => {
     return new Promise((resolve, reject) => {
@@ -38,13 +38,18 @@ function rotateImage(image, angle) {
   // 在canvas上绘制旋转后的图像
   ctx.drawImage(image, -canvas.width / 2, -canvas.height / 2);
 
-  return  canvas.toDataURL();
+  return canvas.toDataURL();
 }
 
 async function drawCorImages(ctx, image) {
-  const imgSrcArr = [rotateImage(image, 0),rotateImage(image, 90),rotateImage(image, 270),rotateImage(image, 180)]
+  const imgSrcArr = [
+    rotateImage(image, 0),
+    rotateImage(image, 90),
+    rotateImage(image, 270),
+    rotateImage(image, 180),
+  ];
   const imgArr = await loadImages(imgSrcArr);
-  imgArr.map((img,index)=>{
+  imgArr.map((img, index) => {
     ctx.save();
     if (index === 0) {
       ctx.translate(0, 0);
@@ -60,7 +65,7 @@ async function drawCorImages(ctx, image) {
     }
     ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
     ctx.restore();
-  })
+  });
 }
 
 function drawBorImages(ctx, bor_image, cen_image) {
@@ -70,7 +75,7 @@ function drawBorImages(ctx, bor_image, cen_image) {
   const centerY = ctx.canvas.height / 2;
   ctx.translate(centerX, centerY);
   for (var i = 0; i < numBor; i++) {
-    ctx.rotate(((360/numBor) * Math.PI) / 180);
+    ctx.rotate(((360 / numBor) * Math.PI) / 180);
     ctx.drawImage(
       bor_image,
       -bor_image.naturalWidth / 2,
@@ -82,41 +87,55 @@ function drawBorImages(ctx, bor_image, cen_image) {
   ctx.restore();
 }
 
-
 function drawCenImage(ctx, image) {
   ctx.save();
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
   ctx.translate(centerX, centerY);
-  ctx.drawImage(image, -image.naturalWidth/2, -image.naturalWidth/2,image.naturalWidth,image.naturalWidth);
+  ctx.drawImage(
+    image,
+    -image.naturalWidth / 2,
+    -image.naturalWidth / 2,
+    image.naturalWidth,
+    image.naturalWidth
+  );
   ctx.restore();
 }
 
-
-function Hua({numberImage,canvasHW,typeHua,cenImgSrc,corImgSrc,borImgSrc}) {
-  if(typeHua==='s'||typeHua==='S'){
+function Hua({
+  numberImage,
+  canvasHW,
+  typeHua,
+  cenImgSrc,
+  corImgSrc,
+  borImgSrc,
+}) {
+  if (typeHua === "s" || typeHua === "S") {
   }
-  const [imgURL,setimgURL] = useState("")
-  useEffect(()=>{
-      const f = async ()=>{
-        const [cenImg,corImg,borImg] = await loadImages([cenImgSrc,corImgSrc,borImgSrc]);
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = 318;
-        canvas.height = 318;
-        // 中心
-        drawCenImage(ctx, cenImg);
-        // 中心周围
-        drawBorImages(ctx, borImg, cenImg);
-        // 四角
-        await drawCorImages(ctx, corImg);
-        setimgURL(canvas.toDataURL());
-      }
-      f();
-     }
-  ,[cenImgSrc,corImgSrc,borImgSrc])
+  const [imgURL, setimgURL] = useState("");
+  useEffect(() => {
+    const f = async () => {
+      const [cenImg, corImg, borImg] = await loadImages([
+        cenImgSrc,
+        corImgSrc,
+        borImgSrc,
+      ]);
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = 318;
+      canvas.height = 318;
+      // 中心
+      drawCenImage(ctx, cenImg);
+      // 中心周围
+      drawBorImages(ctx, borImg, cenImg);
+      // 四角
+      await drawCorImages(ctx, corImg);
+      setimgURL(canvas.toDataURL());
+    };
+    f();
+  }, [cenImgSrc, corImgSrc, borImgSrc]);
 
-  return <Canvas imgURL={imgURL}  HW={canvasHW} numberImage={numberImage} />;
+  return <Canvas imgURL={imgURL} HW={canvasHW} numberImage={numberImage} />;
 }
 
 export default Hua;
