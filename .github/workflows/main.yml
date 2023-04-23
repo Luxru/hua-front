@@ -41,14 +41,16 @@ jobs:
           SOURCE: "out/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: "/home/${{ secrets.REMOTE_USER }}/${{ github.repository }}/"
+          TARGET: "/home/${{ secrets.REMOTE_USER }}/hua-front/"
           SCRIPT_BEFORE: |
             whoami
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
             ls -al
-            rm -rf ./out
+            cp -r ./out ./out.bak
             ls -al
           SCRIPT_AFTER: |
             whoami
+            ls -al
+            rm -rf ./out.bak
             ls -al
             echo $RSYNC_STDOUT
