@@ -50,5 +50,6 @@ jobs:
             echo "------------------------------"
           SCRIPT_AFTER: |
             whoami
+            cd /home/${{ secrets.REMOTE_USER }}/hua-front/
             ls -al
             echo $RSYNC_STDOUT
