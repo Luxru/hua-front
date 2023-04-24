@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Canvas from "@/components/Canvas";
 
+const ratio = 5;
+const [cenHW,corHW,borHW,drawHW] = [101,144,67,318].map((e)=>ratio*e);
+
 async function loadImages(imageURLs) {
   // 创建一个Promise数组，每个Promise表示一张图片的加载
   const imagePromises = imageURLs.map((url) => {
@@ -54,21 +57,21 @@ async function drawCorImages(ctx, image) {
     if (index === 0) {
       ctx.translate(0, 0);
     } else if (index === 1) {
-      ctx.translate(ctx.canvas.width - image.naturalWidth, 0);
+      ctx.translate(ctx.canvas.width - corHW, 0);
     } else if (index === 2) {
-      ctx.translate(0, ctx.canvas.height - image.naturalHeight);
+      ctx.translate(0, ctx.canvas.height - corHW);
     } else if (index === 3) {
       ctx.translate(
-        ctx.canvas.width - image.naturalWidth,
-        ctx.canvas.height - image.naturalHeight
+        ctx.canvas.width - corHW,
+        ctx.canvas.height - corHW
       );
     }
-    ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+    ctx.drawImage(img, 0, 0, corHW,corHW);
     ctx.restore();
   });
 }
 
-function drawBorImages(ctx, bor_image, cen_image) {
+function drawBorImages(ctx, bor_image) {
   ctx.save();
   const numBor = 8;
   const centerX = ctx.canvas.width / 2;
@@ -78,10 +81,10 @@ function drawBorImages(ctx, bor_image, cen_image) {
     ctx.rotate(((360 / numBor) * Math.PI) / 180);
     ctx.drawImage(
       bor_image,
-      -bor_image.naturalWidth / 2,
-      cen_image.naturalHeight / 2,
-      bor_image.naturalWidth,
-      bor_image.naturalHeight
+      -borHW / 2,
+      -cenHW / 2-borHW,
+      borHW,
+      borHW
     );
   }
   ctx.restore();
@@ -94,10 +97,10 @@ function drawCenImage(ctx, image) {
   ctx.translate(centerX, centerY);
   ctx.drawImage(
     image,
-    -image.naturalWidth / 2,
-    -image.naturalWidth / 2,
-    image.naturalWidth,
-    image.naturalWidth
+    -cenHW / 2,
+    -cenHW / 2,
+    cenHW,
+    cenHW
   );
   ctx.restore();
 }
@@ -122,14 +125,16 @@ function Hua({
       ]);
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-      canvas.width = 318;
-      canvas.height = 318;
+
+      canvas.width = drawHW;
+      canvas.height = drawHW;
       // 中心
       drawCenImage(ctx, cenImg);
       // 中心周围
-      drawBorImages(ctx, borImg, cenImg);
+      drawBorImages(ctx, borImg);
       // 四角
       await drawCorImages(ctx, corImg);
+
       setimgURL(canvas.toDataURL());
     };
     f();

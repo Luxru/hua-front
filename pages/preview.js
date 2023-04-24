@@ -2,15 +2,19 @@ import Logo from "@/components/Logo";
 import Hua from "@/components/Hua";
 import Footer from "@/components/Footer";
 import Head from "next/head";
+import { useContext } from "react";
+import { HuaContext } from "@/context/HuaContext";
 
-export default function Home({
-  canvasHW = 400,
-  cenImgSrc = "/thua/cen.svg",
-  corImgSrc = "/thua/cor.svg",
-  borImgSrc = "/thua/bor.svg",
-  numberImage = 1,
-  typeHua = "s",
-}) {
+export default function Home() {
+  const  {huaState, _}= useContext(HuaContext);
+  const {
+    canvasHW,
+    cenImgSrc,
+    corImgSrc,
+    borImgSrc,
+    numberImage,
+    typeHua,
+  } = huaState;
   return (
     <>
       <Head>

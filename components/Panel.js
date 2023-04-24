@@ -3,10 +3,12 @@ import HuaButtonGroup from "@/components/HuaButton";
 import menu_ico from "@/public/assets/menu_ico.svg";
 import down_arrow from "@/public/assets/down_arrow.svg";
 import up_arrow from "@/public/assets/up_arrow.svg";
+import { HuaContext } from "@/context/HuaContext";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+import { useContext } from "react";
 
 function Info({ info }) {
   return (
@@ -17,13 +19,17 @@ function Info({ info }) {
   );
 }
 
-export default function Panel({
-  canvasHW = 400,
-  cenImgSrc = "/thua/cen.svg",
-  corImgSrc = "/thua/cor.svg",
-  borImgSrc = "/thua/bor.svg",
-}) {
-  const [numberImage, setNumberImage] = useState(1);
+export default function Panel() {
+  
+  const  {huaState, setHuaState}= useContext(HuaContext);
+  const {
+    canvasHW,
+    cenImgSrc,
+    corImgSrc,
+    borImgSrc,
+    numberImage,
+    typeHua,
+  } = huaState;
 
   const colorArr = [
     "bg-panel-blue",
@@ -33,15 +39,17 @@ export default function Panel({
   ];
 
   const onClickIncreaseNum = () => {
-    setNumberImage(numberImage + 1);
+    setHuaState({
+      ...huaState,
+      numberImage:numberImage+1,
+    })
   };
 
   const onClickDecreaseNum = () => {
-    var num = 1;
-    if (numberImage - 1 > 1) {
-      num = numberImage - 1;
-    }
-    setNumberImage(num);
+    setHuaState({
+      ...huaState,
+      numberImage:huaState.numberImage - 1 > 1?huaState.numberImage - 1:1,
+    })
   };
 
   return (
@@ -50,7 +58,7 @@ export default function Panel({
         <Hua
           numberImage={numberImage}
           canvasHW={canvasHW}
-          typeHua={"s"}
+          typeHua={typeHua}
           cenImgSrc={cenImgSrc}
           corImgSrc={corImgSrc}
           borImgSrc={borImgSrc}
