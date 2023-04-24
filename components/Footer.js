@@ -1,13 +1,15 @@
 import footer_img from "@/public/assets/footer_menu.svg";
 import Image from "next/image";
+import {useRouter} from "next/router";
 
-export default function Footer({ onClick }) {
+export default function Footer() {
   const today = new Date();
+  const router = useRouter();
   return (
     <div className="grid grid-cols-2 h-fit w-full p-4">
       <button
         className="w-fit h-fit self-end hover:bg-gray-200 rounded-md p-1 inline-block  justify-self-start active:translate-y-1"
-        onClick={onClick}
+        onClick={router.back}
       >
         <Image src={footer_img} alt="footer_img" />
       </button>

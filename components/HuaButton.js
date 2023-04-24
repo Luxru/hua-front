@@ -4,14 +4,14 @@ import { useEffect, useId, useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-function HuaButton({ id, onClick, idClicked, typeButton, color }) {
+function HuaButton({onClick, id, idClicked, typeButton, color }) {
   if (typeButton == "Hua") {
     return (
       <button className="w-fit hover:bg-gray-200 active:bg-gray-100 rounded-md inline-block">
         <Image
           id={id}
           onClick={onClick}
-          src={idClicked === id ? footer_clicked_img : footer_img}
+          src={idClicked == id ? footer_clicked_img : footer_img}
           alt={""}
         />
       </button>
@@ -23,9 +23,7 @@ function HuaButton({ id, onClick, idClicked, typeButton, color }) {
         id={id}
         onClick={onClick}
         className={
-          color +
-          " w-6 h-6 lg:w-8 lg:h-8 inline-block rounded-full active:translate-y-1 " +
-          (id == idClicked ? "opacity-100" : "opacity-50")
+          `${color} w-6 h-6 lg:w-8 lg:h-8 inline-block rounded-full active:translate-y-1 ${(id == idClicked ? "opacity-100" : "opacity-50")}`
         }
       />
     </button>
@@ -33,27 +31,23 @@ function HuaButton({ id, onClick, idClicked, typeButton, color }) {
 }
 
 // props接受一个参数index，会被告知第几个元素被点击
-function HuaButtonGroup({ className="space-x-2",numButton=1, typeButton="Hua", setIndex, colorArr }) {
-  const [idClicked, setidClicked] = useState(false);
-  const id = useId();
-  useEffect(() => {
-    setidClicked(id + String(0));
-  }, [id]);
+function HuaButtonGroup({ className="space-x-2",numButton = 1, typeButton="Hua", setIndex=undefined, colorArr=undefined}) {
+  const [idClicked, setidClicked] = useState('0');
   const onClick = (event) => {
     if (setIndex !== undefined) {
       setIndex(setIndex(event.currentTarget.index));
     }
+    console.log(event.currentTarget.id,typeof event.currentTarget.id);
     setidClicked(event.currentTarget.id);
   };
   var buttonArray = [];
   for (let i = 0; i < numButton; i++) {
     buttonArray.push(
       <HuaButton
+        id={i.toString()}
         key={i}
         idClicked={idClicked}
         onClick={onClick}
-        id={id + String(i)}
-        index={i}
         color={colorArr === undefined ? "" : colorArr[i]}
         typeButton={typeButton}
       />

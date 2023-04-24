@@ -6,6 +6,7 @@ import up_arrow from "@/public/assets/up_arrow.svg";
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function Info({ info }) {
   return (
@@ -16,14 +17,14 @@ function Info({ info }) {
   );
 }
 
-export default function Panel() {
+export default function Panel({
+  canvasHW = 400,
+  cenImgSrc = "/thua/cen.svg",
+  corImgSrc = "/thua/cor.svg",
+  borImgSrc = "/thua/bor.svg",
+}) {
   const [numberImage, setNumberImage] = useState(1);
-  const [canvasHW, setCanvasHW] = useState(400);
-  const [cenImgSrc, corImgSrc, borImgSrc] = [
-    "/thua/cen.svg",
-    "/thua/cor.svg",
-    "/thua/bor.svg",
-  ];
+
   const colorArr = [
     "bg-panel-blue",
     "bg-panel-green",
@@ -33,7 +34,6 @@ export default function Panel() {
 
   const onClickIncreaseNum = () => {
     setNumberImage(numberImage + 1);
-    setCanvasHW(canvasHW);
   };
 
   const onClickDecreaseNum = () => {
@@ -116,11 +116,13 @@ export default function Panel() {
       </div>
       <>
         <div className="col-span-1" />
-        <button className="">
-          <p className="font-FZLT text-2xl w-fit px-8 bg-panel-gray active:translate-y-1">
-            效果预览
-          </p>
-        </button>
+        <Link href="/preview">
+          <button className="">
+            <p className="font-FZLT text-2xl w-fit px-8 bg-panel-gray active:translate-y-1">
+              效果预览
+            </p>
+          </button>
+        </Link>
       </>
     </div>
   );
