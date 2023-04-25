@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Canvas from "@/components/Canvas";
 
 const ratio = 5;
+const numBor = 8;
 const [cenHW,corHW,borHW,drawHW] = [101,144,67,318].map((e)=>ratio*e);
 
 async function loadImages(imageURLs) {
@@ -73,7 +74,6 @@ async function drawCorImages(ctx, image) {
 
 function drawBorImages(ctx, bor_image) {
   ctx.save();
-  const numBor = 8;
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
   ctx.translate(centerX, centerY);

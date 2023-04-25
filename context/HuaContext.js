@@ -6,9 +6,9 @@ export const HuaContext = createContext(null);
 export default function Context({ children }) {
     const [huaState, setHuaState] = useState({
         canvasHW: 400,
-        cenImgSrc: "/thua/cen.svg",
-        corImgSrc: "/thua/cor.svg",
-        borImgSrc: "/thua/bor.svg",
+        cenImgSrc: "/assets/cen.svg",
+        corImgSrc: "/assets/cor.svg",
+        borImgSrc: "/assets/bor.svg",
         numberImage: 1,
         typeHua: "s",
       });
