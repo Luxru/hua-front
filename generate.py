@@ -9,8 +9,12 @@ def dirToJSON(dir_path,dir_obj={}):
             dir_obj[x] = {}
             dirToJSON(p,dir_obj[x])
         else:
+            fn,ft = os.path.basename(p).split('.')
+            np = f'{os.path.dirname(p)}/{fn[:10]}.{ft}'
+            os.rename(p,np)
+            p = np
             p = p[6:]
-            dir_obj[x] = p
+            dir_obj[fn[:10]] = p
     return dir_obj
 
 dir_obj = dirToJSON("public/thua")
