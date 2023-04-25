@@ -21,8 +21,9 @@ dir_obj = dirToJSON("public/thua")
 
 path_info = json.dumps(dir_obj,ensure_ascii=False,indent=2)
 
+var_name = 'pathInfo'
 
 with open("path.config.js","wb+") as fp:
     fp.write(
-        f'''//This file was auto generated, DO NOT EDIT.\n\nconst pathInfo = {path_info};\n\nexport default pathINFO;'''.encode('utf-8')
+        f'''//This file was auto generated, DO NOT EDIT.\n\nconst {var_name} = {path_info};\n\nexport default {var_name};'''.encode('utf-8')
 )
