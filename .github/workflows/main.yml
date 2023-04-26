@@ -22,7 +22,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: get src
+    - name: Get source code
       uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -43,17 +43,16 @@ jobs:
           SCRIPT_AFTER: |
             whoami
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
-            echo ------------------------BEFORE BUILD ------------------------
+            echo ------------------------BEFORE BUILD STOP ------------------------
             docker images
-            docker build -t nextjs-docker .
-            echo ------------------------AFTER BUILD ------------------------
+            docker ps
+            docker compose build
+            docker compose down
+            docker image prune -f 
+            echo ------------------------AFTER BUILD STOP ------------------------
             docker images
-            echo ------------------------BEFORE STOP ------------------------
             docker ps
-            docker stop nextjs-container
-            echo ------------------------AFTER STOP ------------------------
-            docker ps
-            docker run -d -p 3000:3000 --name nextjs-container nextjs-docker
+            docker compose up -d
             echo ------------------------AFTER RUN ------------------------
             docker ps
             echo $RSYNC_STDOUT
