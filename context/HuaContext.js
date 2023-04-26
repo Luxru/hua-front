@@ -1,4 +1,5 @@
 import { createContext, useState} from "react";
+import pathInfo from "@/path.config";
 
 export const HuaContext = createContext(null);
   

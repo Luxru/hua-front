@@ -18,45 +18,42 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
         python-version: ["3.9"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - name: get src
       uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install npm dependencies
-      run: npm install
     - name: Generate the config file
       run: python generate.py
-    - name: Run build task
-      run: npm run build --if-present
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: "out/"
+          SOURCE: "/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: "/home/${{ secrets.REMOTE_USER }}/hua-front/"
-          SCRIPT_BEFORE: |
-            whoami
-            
-            cd /home/${{ secrets.REMOTE_USER }}/hua-front/
-            ls -al
-            echo "------------------------------"
+          EXCLUDE: "/node_modules/"
           SCRIPT_AFTER: |
             whoami
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
-            ls -al
+            echo ------------------------BEFORE BUILD ------------------------
+            docker images
+            docker build -t nextjs-docker .
+            echo ------------------------AFTER BUILD ------------------------
+            docker images
+            echo ------------------------BEFORE STOP ------------------------
+            docker ps
+            docker stop nextjs-container
+            echo ------------------------AFTER STOP ------------------------
+            docker ps
+            docker run -d -p 3000:3000 --name nextjs-container nextjs-docker
+            echo ------------------------AFTER RUN ------------------------
+            docker ps
             echo $RSYNC_STDOUT

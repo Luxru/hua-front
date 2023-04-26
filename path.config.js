@@ -400,4 +400,4 @@ const pathInfo = {
   }
 };
 
-export default pathINFO;
+export default pathInfo;
