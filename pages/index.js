@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Img_1 from "@/public/thua/1/DHWY051-01.png";
+import Img_1 from "@/public/assets/DHWY051-01.png";
 import Link from "next/link";
 import Image from "next/image";
 
