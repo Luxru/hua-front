@@ -4,17 +4,14 @@ import Footer from "@/components/Footer";
 import Head from "next/head";
 import { useContext } from "react";
 import { HuaContext } from "@/context/HuaContext";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const  {huaState, _}= useContext(HuaContext);
-  const {
-    canvasHW,
-    cenImgSrc,
-    corImgSrc,
-    borImgSrc,
-    numberImage,
-    typeHua,
-  } = huaState;
+  const { huaState, _ } = useContext(HuaContext);
+  const router = useRouter();
+  const { pid } = router.query;
+  const { canvasHW, cenImgSrc, corImgSrc, borImgSrc, numberImage, typeHua } =
+    huaState;
   return (
     <>
       <Head>
@@ -38,7 +35,7 @@ export default function Home() {
             />
           </div>
           <div className="self-end">
-            <Footer />
+            <Footer href={{ pathname: "/[pid]/panel", query: { pid: pid } }} />
           </div>
         </div>
       </div>
