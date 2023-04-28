@@ -1,5 +1,4 @@
-import { createContext, useReducer, useState} from "react";
-import pathInfo from "@/path.config";
+import { createContext, useReducer} from "react";
 
 export const HuaContext = createContext(null);
 
@@ -60,9 +59,9 @@ const huaStateReducer = (huaState,action)=>{
 export default function Context({ children }) {
     const [huaState, dispatch] = useReducer(huaStateReducer,{
       canvasHW: 400,
-      cenImgSrc: "/assets/cen.svg",
-      corImgSrc: "/assets/cor.svg",
-      borImgSrc: "/assets/bor.svg",
+      cenImgSrc: "/assets/cen.png",
+      corImgSrc: "/assets/cor.png",
+      borImgSrc: "/assets/bor.png",
       numberImage: 1,
       typeHua: "s",
     });

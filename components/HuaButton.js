@@ -1,5 +1,5 @@
-import footer_img from "@/public/assets/footer_menu.svg";
-import footer_clicked_img from "@/public/assets/footer_menu_red.svg";
+import footer_img from "@/public/assets/footer_menu.png";
+import footer_clicked_img from "@/public/assets/footer_menu_red.png";
 import {useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";

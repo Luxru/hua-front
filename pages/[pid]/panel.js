@@ -2,9 +2,9 @@ import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import HuaButtonGroup from "@/components/HuaButton";
 import Hua from "@/components/Hua";
-import menu_ico from "@/public/assets/menu_ico.svg";
-import down_arrow from "@/public/assets/down_arrow.svg";
-import up_arrow from "@/public/assets/up_arrow.svg";
+import menu_ico from "@/public/assets/menu_ico.png";
+import down_arrow from "@/public/assets/down_arrow.png";
+import up_arrow from "@/public/assets/up_arrow.png";
 
 import Head from "next/head";
 import Image from "next/image";
