@@ -5,11 +5,11 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
 
   useEffect(() => {
     const context = canvas.current.getContext("2d");
-    context.clearRect(0, 0, HW, HW);
     const tHW = HW / numberImage;
     const resultImage = new Image();
     resultImage.src = imgURL;
     resultImage.onload = () => {
+      context.clearRect(0, 0, HW, HW);
       for (let i = 0; i < numberImage; i++) {
         for (let j = 0; j < numberImage; j++) {
           context.drawImage(resultImage, i * tHW, j * tHW, tHW, tHW);

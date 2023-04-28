@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 const colors = require('tailwindcss/colors')
-
+const { fontFamily } = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [
@@ -31,7 +31,8 @@ module.exports = {
     },
     },
     fontFamily:{
-      FZLT:'fzlt'
+      ...fontFamily,
+      FZLT:['var(--font-fzlt)']
     },
     extend: {},
   },
