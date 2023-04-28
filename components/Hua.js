@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Canvas from "@/components/Canvas";
 
+import { useContext } from "react";
+import { HuaContext, huaStateAction } from "@/context/HuaContext";
 const ratio = 5;
 const numBor = 8;
 const [cenHW,corHW,borHW,drawHW] = [101,144,67,318].map((e)=>ratio*e);
@@ -105,23 +107,15 @@ function drawCenImage(ctx, image) {
   ctx.restore();
 }
 
-function Hua({
-  numberImage,
-  canvasHW,
-  typeHua,
-  cenImgSrc,
-  corImgSrc,
-  borImgSrc,
-}) {
-  if (typeHua === "s" || typeHua === "S") {
-  }
-  const [imgURL, setimgURL] = useState("");
+function Hua() {
+  const { huaState, dispatch } = useContext(HuaContext);
+  const makeFrom = useCallback(()=>huaState.cenImgSrc+huaState.corImgSrc+huaState.borImgSrc,[huaState]);
   useEffect(() => {
     const f = async () => {
       const [cenImg, corImg, borImg] = await loadImages([
-        cenImgSrc,
-        corImgSrc,
-        borImgSrc,
+        huaState.cenImgSrc,
+        huaState.corImgSrc,
+        huaState.borImgSrc,
       ]);
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -134,13 +128,26 @@ function Hua({
       drawBorImages(ctx, borImg);
       // 四角
       await drawCorImages(ctx, corImg);
-
-      setimgURL(canvas.toDataURL());
+      dispatch({
+        type:huaStateAction.resultImg.url.set,
+        url:canvas.toDataURL()
+      });
+      dispatch(
+        {
+          type:huaStateAction.resultImg.from.set,
+          from:makeFrom(),
+        }
+      )
     };
-    f();
-  }, [cenImgSrc, corImgSrc, borImgSrc]);
+    if(huaState.resultImg.from!=makeFrom()){
+      f();
+    }
+    // else use cache data
+  }, [huaState,dispatch,makeFrom]);
 
-  return <Canvas imgURL={imgURL} HW={canvasHW} numberImage={numberImage} />;
+  if (huaState.typeHua === "s" || huaState.typeHua === "S") {
+  }
+  return <Canvas imgURL={huaState.resultImg.url} HW={huaState.canvasHW} numberImage={huaState.numberImage} />;
 }
 
 export default Hua;

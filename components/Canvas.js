@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 
 const Canvas = ({ numberImage, HW, imgURL }) => {
   const canvas = useRef(null);
-
   useEffect(() => {
     const context = canvas.current.getContext("2d");
     const tHW = HW / numberImage;
@@ -16,7 +15,7 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
         }
       }
     };
-    return () => {};
+    return;
   }, [imgURL, HW, numberImage]);
 
   return (

@@ -1,74 +1,104 @@
-import { createContext, useReducer} from "react";
+import { createContext, useReducer } from "react";
 
 export const HuaContext = createContext(null);
 
 export const huaStateAction = {
-  numberImage:{
-    increase:'numberImage/increase',
-    decrease: 'numberImage/decrease',
+  numberImage: {
+    increase: "numberImage/increase",
+    decrease: "numberImage/decrease",
   },
-  huaType:{
-    set:'huaType/set@id',
+  typeHua: {
+    set: "typeHua/set@typeHua",
   },
-  cenImgSrc:{
-    set:'cenImgSrc/set@imgSrc'
+  cenImgSrc: {
+    set: "cenImgSrc/set@cenImgSrc",
   },
-  borImgSrc:{
-    set:'borImgSrc/set@imgSrc'
+  borImgSrc: {
+    set: "borImgSrc/set@borImgSrc",
   },
-}
+  resultImg: {
+    from: {
+      set: "resultImg.from/set@from",
+    },
+    url: {
+      set: "resultImg.url/set@url",
+    },
+  },
+};
 
-const huaStateReducer = (huaState,action)=>{
-  switch(action.type){
-    case huaStateAction.numberImage.increase:{
-      return {
-          ...huaState,
-          numberImage: huaState.numberImage + 1,
-        };
-    }
-    case huaStateAction.numberImage.decrease:{
+const huaStateReducer = (huaState, action) => {
+  switch (action.type) {
+    case huaStateAction.numberImage.increase: {
       return {
         ...huaState,
-        numberImage: huaState.numberImage - 1 > 1 ? huaState.numberImage - 1 : 1,
+        numberImage: huaState.numberImage + 1,
       };
     }
-    case huaStateAction.huaType.set:{
+    case huaStateAction.numberImage.decrease: {
       return {
         ...huaState,
-        typeHua: ["s", "m", "l"][action.id],
+        numberImage:
+          huaState.numberImage - 1 > 1 ? huaState.numberImage - 1 : 1,
       };
     }
-    case huaStateAction.cenImgSrc.set:{
+    case huaStateAction.typeHua.set: {
       return {
         ...huaState,
-        cenImgSrc: action.imgSrc,
+        typeHua: action.typeHua,
       };
     }
-    case huaStateAction.borImgSrc.set:{
+    case huaStateAction.cenImgSrc.set: {
       return {
         ...huaState,
-        borImgSrc: action.imgSrc,
+        cenImgSrc: action.cenImgSrc,
+      };
+    }
+    case huaStateAction.borImgSrc.set: {
+      return {
+        ...huaState,
+        borImgSrc: action.borImgSrc,
+      };
+    }
+    case huaStateAction.resultImg.url.set: {
+      return {
+        ...huaState,
+        resultImg: {
+          ...huaState.resultImg,
+          url: action.url,
+        },
+      };
+    }
+    case huaStateAction.resultImg.from.set: {
+      return {
+        ...huaState,
+        resultImg: {
+          ...huaState.resultImg,
+          from: action.from,
+        },
       };
     }
     default: {
-      throw Error('Unknown action: ' + action.type);
+      throw Error("Unknown action: " + action.type);
     }
   }
-}
+};
 
 export default function Context({ children }) {
-    const [huaState, dispatch] = useReducer(huaStateReducer,{
-      canvasHW: 400,
-      cenImgSrc: "/assets/cen.png",
-      corImgSrc: "/assets/cor.png",
-      borImgSrc: "/assets/bor.png",
-      numberImage: 1,
-      typeHua: "s",
-    });
-    return (
-      <HuaContext.Provider value={{ huaState, dispatch }}>
-        {children}
-      </HuaContext.Provider>
-    );
-  }
-
+  const [huaState, dispatch] = useReducer(huaStateReducer, {
+    canvasHW: 400,
+    cenImgSrc: "/assets/cen.png",
+    corImgSrc: "/assets/cor.png",
+    borImgSrc: "/assets/bor.png",
+    numberImage: 1,
+    typeHua: "s",
+    resultImg: {
+      from: "",
+      url: "",
+    },
+  });
+  return (
+    <HuaContext.Provider value={{ huaState, dispatch }}>
+      {children}
+    </HuaContext.Provider>
+  );
+}

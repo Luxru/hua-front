@@ -65,8 +65,7 @@ function Header({ initIndex, onItemClick }) {
 export default function Home() {
   const router = useRouter();
   const { huaState, dispatch } = useContext(HuaContext);
-  const { canvasHW, cenImgSrc, corImgSrc, borImgSrc, numberImage, typeHua } =
-    huaState;
+  const { numberImage, typeHua } = huaState;
   const { pid } = router.query;
 
   if (Object.keys(pathInfo).indexOf(pid) == -1) {
@@ -91,8 +90,8 @@ export default function Home() {
 
   const onItemClick = (id) => {
     dispatch({
-      type: huaStateAction.huaType.set,
-      id: Number(id),
+      type: huaStateAction.typeHua.set,
+      typeHua: ["s", "m", "l"][Number(id)],
     });
   };
 
@@ -102,7 +101,7 @@ export default function Home() {
     const keys = Object.keys(imgDirObj);
     dispatch({
       type: huaStateAction.cenImgSrc.set,
-      imgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]],
+      cenImgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]],
     });
   };
 
@@ -112,7 +111,7 @@ export default function Home() {
     const keys = Object.keys(imgDirObj);
     dispatch({
       type: huaStateAction.borImgSrc.set,
-      imgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]],
+      borImgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]],
     });
   };
 
@@ -131,14 +130,7 @@ export default function Home() {
 
         <div className="flex-1 flex items-center justify-center">
           <div className="min-w-fit w-5/6 grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
-            <Hua
-              numberImage={numberImage}
-              canvasHW={canvasHW}
-              typeHua={typeHua}
-              cenImgSrc={cenImgSrc}
-              corImgSrc={corImgSrc}
-              borImgSrc={borImgSrc}
-            />
+            <Hua />
             <div className="w-fit flex flex-col justify-between space-y-2 lg:space-y-0">
               <div className="flex space-x-4">
                 <Info info="排布" className="self-center" />
