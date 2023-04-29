@@ -3,9 +3,10 @@ import Canvas from "@/components/Canvas";
 
 import { useContext } from "react";
 import { HuaContext, huaStateAction } from "@/context/HuaContext";
-const ratio = 5;
+const ratio = 2;
 const numBor = 8;
-const [cenHW,corHW,borHW,drawHW] = [101,144,67,318].map((e)=>ratio*e);
+var [cenHW,corHW,borHW,drawHW] = [160,224,100,428].map((e)=>ratio*e);
+// var [cenHW,corHW,borHW,drawHW] = [139,224,91,412].map((e)=>ratio*e);
 
 async function loadImages(imageURLs) {
   // 创建一个Promise数组，每个Promise表示一张图片的加载

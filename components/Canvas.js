@@ -20,7 +20,7 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
 
   return (
     <canvas
-      className="border border-black"
+      className="shadow-xl"
       ref={canvas}
       height={HW}
       width={HW}

@@ -1,4 +1,4 @@
-import footer_img from "@/public/assets/footer_menu.png";
+import footer_img from "@/public/assets/ret_button.png";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";

@@ -2,9 +2,8 @@ import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import HuaButtonGroup from "@/components/HuaButton";
 import Hua from "@/components/Hua";
-import menu_ico from "@/public/assets/menu_ico.png";
-import down_arrow from "@/public/assets/down_arrow.png";
-import up_arrow from "@/public/assets/up_arrow.png";
+import menu_ico from "@/public/assets/logo_img.svg";
+import NumProgressBar from "@/components/NumProgressBar";
 
 import Head from "next/head";
 import Image from "next/image";
@@ -17,10 +16,15 @@ import pathInfo from "@/path.config";
 import { useRouter } from "next/router";
 import ErrorPage from "@/components/ErrorPage";
 
-function Info({ info, className }) {
+function Info({ info, className = "" }) {
   return (
-    <div className={`${className} space-x-2`}>
-      <Image className="inline-block" src={menu_ico} alt="menu_ico" />
+    <div className={`${className} space-x-2 pr-4`}>
+      <Image
+        className="inline-block"
+        src={menu_ico}
+        alt="menu_ico"
+        width={40}
+      />
       <p className="inline-block font-FZLT text-2xl">{info}</p>
     </div>
   );
@@ -65,7 +69,7 @@ function Header({ initIndex, onItemClick }) {
 export default function Home() {
   const router = useRouter();
   const { huaState, dispatch } = useContext(HuaContext);
-  const { numberImage, typeHua } = huaState;
+  const { numberImage,typeHua } = huaState;
   const { pid } = router.query;
 
   if (Object.keys(pathInfo).indexOf(pid) == -1) {
@@ -75,17 +79,6 @@ export default function Home() {
   const btnNum = {
     cenNum: Object.keys(workPathObj["花心"]).length,
     borNum: Object.keys(workPathObj["花瓣"]).length,
-  };
-  const onClickIncreaseNum = () => {
-    dispatch({
-      type: huaStateAction.numberImage.increase,
-    });
-  };
-
-  const onClickDecreaseNum = () => {
-    dispatch({
-      type: huaStateAction.numberImage.decrease,
-    });
   };
 
   const onItemClick = (id) => {
@@ -129,31 +122,16 @@ export default function Home() {
         </div>
 
         <div className="flex-1 flex items-center justify-center">
-          <div className="min-w-fit w-5/6 grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
+          <div className="min-w-fit w-5/6 grid grid-cols-1 space-y-2 lg:space-y-0 lg:grid-cols-2 gap-4 justify-items-center px-8">
             <Hua />
-            <div className="w-fit flex flex-col justify-between space-y-2 lg:space-y-0">
+            <div className="w-4/5 h-4/5 flex flex-col self-center justify-between">
               <div className="flex space-x-4">
-                <Info info="排布" className="self-center" />
-                <div className="grid grid-rows-2 grid-cols-4 grid-flow-row border-4 border-black w-fit">
-                  <p className="text-center text-xl font-FZLT row-span-2 col-span-3 place-self-center">
-                    {numberImage}x{numberImage}
-                  </p>
-                  <button>
-                    <Image
-                      src={up_arrow}
-                      alt={"up_arrow"}
-                      onClick={onClickIncreaseNum}
-                      className="active:opacity-40 active:bg-gray-100 hover:bg-gray-200 rounded-lg"
-                    />
-                  </button>
-                  <button>
-                    <Image
-                      src={down_arrow}
-                      alt={"down_arrow"}
-                      onClick={onClickDecreaseNum}
-                      className="active:opacity-40 active:bg-gray-100 hover:bg-gray-200 rounded-lg"
-                    />
-                  </button>
+                <Info info="排布" />
+                <div className="flex-1">
+                <NumProgressBar val={numberImage} setVal={(val)=>dispatch({
+                  type:huaStateAction.numberImage.set,
+                  numberImage:val,
+                })}/>
                 </div>
               </div>
               <Menu
@@ -169,10 +147,10 @@ export default function Home() {
               <Menu infoName={"角隅"} numButton={2} onItemClick={undefined} />
               <Link
                 href={{ pathname: "/[pid]/preview", query: { pid: pid } }}
-                className="w-full"
+                className="w-fit self-end"
               >
-                <p className="font-FZLT text-2xl text-center px-8 bg-panel-gray active:translate-y-1">
-                  效果预览
+                <p className="font-FZLT text-2xl text-center px-8 border-2 border-black rounded-2xl active:translate-y-1">
+                  保存
                 </p>
               </Link>
             </div>

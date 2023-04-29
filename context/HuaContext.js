@@ -4,8 +4,7 @@ export const HuaContext = createContext(null);
 
 export const huaStateAction = {
   numberImage: {
-    increase: "numberImage/increase",
-    decrease: "numberImage/decrease",
+    set: "numberImage/set@numberImage",
   },
   typeHua: {
     set: "typeHua/set@typeHua",
@@ -28,17 +27,10 @@ export const huaStateAction = {
 
 const huaStateReducer = (huaState, action) => {
   switch (action.type) {
-    case huaStateAction.numberImage.increase: {
+    case huaStateAction.numberImage.set: {
       return {
         ...huaState,
-        numberImage: huaState.numberImage + 1,
-      };
-    }
-    case huaStateAction.numberImage.decrease: {
-      return {
-        ...huaState,
-        numberImage:
-          huaState.numberImage - 1 > 1 ? huaState.numberImage - 1 : 1,
+        numberImage: action.numberImage,
       };
     }
     case huaStateAction.typeHua.set: {
@@ -85,7 +77,7 @@ const huaStateReducer = (huaState, action) => {
 
 export default function Context({ children }) {
   const [huaState, dispatch] = useReducer(huaStateReducer, {
-    canvasHW: 400,
+    canvasHW: 450,
     cenImgSrc: "/assets/cen.png",
     corImgSrc: "/assets/cor.png",
     borImgSrc: "/assets/bor.png",
