@@ -18,6 +18,7 @@ jobs:
 
     strategy:
       matrix:
+        node-version: ["18.x"]
         python-version: ["3.9"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
@@ -30,29 +31,34 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Generate the config file
       run: python generate.py
+    - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build
+
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: "/"
+          SOURCE: "/public /.next/standalone /.next/static /ecosystem.config.js"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: "/home/${{ secrets.REMOTE_USER }}/hua-front/"
           EXCLUDE: "/node_modules/"
+          SCRIPT_BEFORE: |
+            cd /home/${{ secrets.REMOTE_USER }}/hua-front/
+            ls
           SCRIPT_AFTER: |
-            whoami
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
             echo ------------------------BEFORE BUILD STOP ------------------------
-            docker images
-            docker ps
-            docker compose build
-            docker compose down
-            docker image prune -f 
+            pm2 ps
+            pm2 delete all
             echo ------------------------AFTER BUILD STOP ------------------------
-            docker images
-            docker ps
-            docker compose up -d
+            pm2 ps
+            pm2 start ecosystem.config.js
             echo ------------------------AFTER RUN ------------------------
-            docker ps
+            pm2 ps
             echo $RSYNC_STDOUT

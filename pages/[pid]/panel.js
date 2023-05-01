@@ -201,7 +201,7 @@ export default function Home() {
         </div>
 
         <div className="flex-1 flex items-center justify-center">
-          <div className="min-w-fit w-5/6 grid grid-cols-1 space-y-2 lg:space-y-0 lg:grid-cols-2 gap-4 justify-items-center px-8">
+          <div className="min-w-fit w-5/6 grid grid-cols-1 space-y-2 lg:space-y-0 lg:grid-cols-2 gap-4 justify-items-center">
             <Hua />
             <div className="w-4/5 h-[95%] flex flex-col self-center justify-between">
               <div className="flex space-x-4">
