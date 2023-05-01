@@ -57,9 +57,10 @@ jobs:
             ls
           SCRIPT_AFTER: |
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
+            ls
             echo ------------------------BEFORE BUILD STOP ------------------------
             pm2 ps
-            pm2 delete all
+            pm2 stop all
             echo ------------------------AFTER BUILD STOP ------------------------
             pm2 ps
             pm2 start ecosystem.config.js

@@ -7,7 +7,7 @@ export default function Footer({href}) {
   return (
     <div className="flex h-fit w-full p-4 justify-between">
       <Link className="w-fit h-fit self-end inline-block justify-self-start" href={href}>
-      <Image src={footer_img} alt="footer" priority className="hover:bg-gray-200 rounded-md p-1 active:translate-y-1 w-9 h-9"/>
+      <Image src={footer_img} alt="footer" className="hover:bg-gray-200 rounded-md p-1 active:translate-y-1 w-9 h-9"/>
       </Link>
       <div className="grid grid-rows-4 h-5/6  justify-items-end self-end">
         <p className="font-bold text-2xl">
