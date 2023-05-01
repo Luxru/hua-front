@@ -1,11 +1,9 @@
 import footer_img from "@/public/assets/ret_button.png";
 import Image from "next/image";
 import Link from "next/link";
-import {useRouter} from "next/router";
 
 export default function Footer({href}) {
   const today = new Date();
-  const router = useRouter();
   return (
     <div className="flex h-fit w-full p-4 justify-between">
       <Link className="w-fit h-fit self-end inline-block justify-self-start" href={href}>
