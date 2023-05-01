@@ -359,6 +359,10 @@ const pathInfo = {
                     "type": "file"
                   }
                 }
+              },
+              "0fbecd1e01aee2cf127791fabb52434a2c68ab479e8fa41848ae4bdd252fcd06": {
+                "filepath": "/thua/2/花心/3-菊花/0fbecd1e01aee2cf127791fabb52434a2c68ab479e8fa41848ae4bdd252fcd06.svg",
+                "type": "file"
               }
             }
           },
@@ -461,12 +465,20 @@ const pathInfo = {
                     "type": "file"
                   }
                 }
+              },
+              "4975e0f4e912583d6fae6683c50c2cc22690371b4f59e5f6068000c28f7d2b67": {
+                "filepath": "/thua/2/花心/1-叶/4975e0f4e912583d6fae6683c50c2cc22690371b4f59e5f6068000c28f7d2b67.svg",
+                "type": "file"
               }
             }
           },
           "2-团花": {
             "type": "dir",
             "contents": {
+              "eb984f800413d2ce95840b1083cd81c001df169d79f545300d5d8707b9ef4b1d": {
+                "filepath": "/thua/2/花心/2-团花/eb984f800413d2ce95840b1083cd81c001df169d79f545300d5d8707b9ef4b1d.svg",
+                "type": "file"
+              },
               "2-团花": {
                 "type": "dir",
                 "contents": {
@@ -862,12 +874,20 @@ const pathInfo = {
                     "type": "file"
                   }
                 }
+              },
+              "df9d3e162e9de1432065cd259785cef0cd880475ee89f27ff75ba79de8e393be": {
+                "filepath": "/thua/2/花瓣/2-云曲瓣/df9d3e162e9de1432065cd259785cef0cd880475ee89f27ff75ba79de8e393be.svg",
+                "type": "file"
               }
             }
           },
           "1-勾卷瓣": {
             "type": "dir",
             "contents": {
+              "81988d42f69cab679eba0148c63bc6229db2067ac30803e1ed65b7fcc00d1141": {
+                "filepath": "/thua/2/花瓣/1-勾卷瓣/81988d42f69cab679eba0148c63bc6229db2067ac30803e1ed65b7fcc00d1141.svg",
+                "type": "file"
+              },
               "1-勾卷瓣": {
                 "type": "dir",
                 "contents": {
@@ -1042,6 +1062,10 @@ const pathInfo = {
           "3-圆叶": {
             "type": "dir",
             "contents": {
+              "2df3299951e1d7a5aa0a4ded891c05f07067b6a02db61e0bf78aef18f3554f06": {
+                "filepath": "/thua/2/花瓣/3-圆叶/2df3299951e1d7a5aa0a4ded891c05f07067b6a02db61e0bf78aef18f3554f06.svg",
+                "type": "file"
+              },
               "3-圆叶": {
                 "type": "dir",
                 "contents": {
@@ -1189,12 +1213,20 @@ const pathInfo = {
                     "type": "file"
                   }
                 }
+              },
+              "d0d89bc6c093d5cb6d74ea9ca48a4c3ff67b1026f1ed18163345c45e1994c289": {
+                "filepath": "/thua/2/角隅/半莲花/d0d89bc6c093d5cb6d74ea9ca48a4c3ff67b1026f1ed18163345c45e1994c289.svg",
+                "type": "file"
               }
             }
           },
           "忍冬": {
             "type": "dir",
             "contents": {
+              "4b38b63ff5105a59e3a85de0aa916da2b233edcdac29cc76e919b2a4ce8b1db7": {
+                "filepath": "/thua/2/角隅/忍冬/4b38b63ff5105a59e3a85de0aa916da2b233edcdac29cc76e919b2a4ce8b1db7.svg",
+                "type": "file"
+              },
               "忍冬": {
                 "type": "dir",
                 "contents": {
@@ -1982,10 +2014,6 @@ const pathInfo = {
                     "type": "file"
                   }
                 }
-              },
-              "4975e0f4e912583d6fae6683c50c2cc22690371b4f59e5f6068000c28f7d2b67": {
-                "filepath": "/thua/1/花心/1-叶纹/4975e0f4e912583d6fae6683c50c2cc22690371b4f59e5f6068000c28f7d2b67.svg",
-                "type": "file"
               }
             }
           },
