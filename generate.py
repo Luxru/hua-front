@@ -10,8 +10,16 @@ def dirToJSON(dir_path,dir_obj={}):
             dir_obj[x] = {"type":'dir','contents':{}}
             dirToJSON(p,dir_obj[x]["contents"])
         else:
-            stat = os.stat(p)
-            rid = hashlib.sha256((str(stat.st_ino)+str(stat.st_uid)+str(stat.st_gid)).encode()).hexdigest()
+            # BUF_SIZE is totally arbitrary, change for your app!
+            BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
+            sha256 = hashlib.sha256()
+            with open(p, 'rb') as f:
+                while True:
+                    data = f.read(BUF_SIZE)
+                    if not data:
+                        break
+                    sha256.update(data)
+            rid = sha256.hexdigest()
             (filepath,tempfilename) = os.path.split(p)
             (fn,ft) = os.path.splitext(tempfilename)
             np = f'{filepath}/{rid}{ft}'
