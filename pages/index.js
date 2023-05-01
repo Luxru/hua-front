@@ -22,7 +22,7 @@ export default function Home() {
     return (
       <div className="w-fit h-fit p-4" key={index}>
         <Link href={`/${pid}/panel`}>
-          <Image src={src} alt="" width={200} height={200}/>
+          <Image src={src} alt="" width={200} height={200} property/>
         </Link>
       </div>
     );
