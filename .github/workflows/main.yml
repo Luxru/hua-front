@@ -39,10 +39,10 @@ jobs:
         npm install
         npm run build
         mkdir build
-        cp -r .next/standalone/* build/
+        cp -r .next/standalone/. build/
         cp -r public build/
-        cp -r .next/static build/.next/
-
+        cp -r .next/static/. build/.next/static
+        cp ecosystem.config.js build/
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
@@ -52,7 +52,6 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: "/home/${{ secrets.REMOTE_USER }}/hua-front/"
-          EXCLUDE: "/node_modules/"
           SCRIPT_BEFORE: |
             cd /home/${{ secrets.REMOTE_USER }}/hua-front/
             ls
