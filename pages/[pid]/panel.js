@@ -19,14 +19,13 @@ import ErrorPage from "@/components/ErrorPage";
 
 function Info({ info, className = "" }) {
   return (
-    <div className={`${className} space-x-2 pr-4`}>
+    <div className={`${className} space-x-2 pr-4 flex items-center`}>
       <Image
-        className="inline-block"
         src={menu_ico}
         alt="menu_ico"
         width={40}
       />
-      <p className="inline-block font-FZLT text-2xl">{info}</p>
+      <p className="font-FZLT text-2xl">{info}</p>
     </div>
   );
 }
@@ -39,7 +38,7 @@ function Menu({ infoName, imgArr, onItemClick, typeHua }) {
       <div className="flex space-x-4">
         <Info info={infoName} />
         <div className="flex flex-col">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 lg:space-x-8">
             <p className="bg-black text-white rounded-full flex justify-center items-center text-sm w-5 h-5">
               1
             </p>
@@ -50,7 +49,7 @@ function Menu({ infoName, imgArr, onItemClick, typeHua }) {
               imgHW={imgHW}
             />
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 lg:space-x-8">
             <p className="bg-black text-white rounded-full flex justify-center items-center text-sm w-5 h-5">
               2
             </p>
@@ -66,7 +65,7 @@ function Menu({ infoName, imgArr, onItemClick, typeHua }) {
     );
   }
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 lg:space-x-8 items-center">
       <Info info={infoName} />
       <HuaButtonGroup
         numButton={imgArr.length}

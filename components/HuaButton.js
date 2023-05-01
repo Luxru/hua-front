@@ -19,7 +19,6 @@ function HuaButton({ onClick, id, src, idClicked, ratio, imgHW }) {
 
 // props接受一个参数index，会被告知第几个元素被点击
 function HuaButtonGroup({
-  className = "space-x-4",
   numButton = 1,
   onItemClick = undefined,
   ratio = false,
@@ -51,7 +50,7 @@ function HuaButtonGroup({
       />
     );
   }
-  return <div className={className}>{buttonArray}</div>;
+  return <>{buttonArray}</>;
 }
 
 HuaButtonGroup.propTypes = {

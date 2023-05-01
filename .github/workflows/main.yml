@@ -35,15 +35,20 @@ jobs:
       uses: actions/setup-node@v3
       with:
           node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm run build
+    - run: |
+        npm install
+        npm run build
+        mkdir build
+        cp -r .next/standalone/* build/
+        cp -r public build/
+        cp -r .next/static build/.next/
 
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: "/public /.next/standalone /.next/static /ecosystem.config.js"
+          SOURCE: "build/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: "/home/${{ secrets.REMOTE_USER }}/hua-front/"
