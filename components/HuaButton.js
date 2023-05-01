@@ -12,7 +12,7 @@ function HuaButton({ onClick, id, src, idClicked, ratio, imgHW }) {
         alt={""}
         width={imgHW}
         height={imgHW}
-        property
+        priority
       />
     </button>
   );
