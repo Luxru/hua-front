@@ -5,8 +5,9 @@ import { useContext } from "react";
 import { HuaContext, huaStateAction } from "@/context/HuaContext";
 const ratio = 2;
 const numBor = 8;
-var [cenHW,corHW,borHW,drawHW] = [160,224,100,428].map((e)=>ratio*e);
-// var [cenHW,corHW,borHW,drawHW] = [139,224,91,412].map((e)=>ratio*e);
+// Type s
+var cenHW, corHW, borHW, drawHW;
+
 
 async function loadImages(imageURLs) {
   // 创建一个Promise数组，每个Promise表示一张图片的加载
@@ -65,30 +66,22 @@ async function drawCorImages(ctx, image) {
     } else if (index === 2) {
       ctx.translate(0, ctx.canvas.height - corHW);
     } else if (index === 3) {
-      ctx.translate(
-        ctx.canvas.width - corHW,
-        ctx.canvas.height - corHW
-      );
+      ctx.translate(ctx.canvas.width - corHW, ctx.canvas.height - corHW);
     }
-    ctx.drawImage(img, 0, 0, corHW,corHW);
+    ctx.drawImage(img, 0, 0, corHW, corHW);
     ctx.restore();
   });
 }
 
-function drawBorImages(ctx, bor_image) {
+function drawBorImages(ctx, bor_image, offset = 0,offset_h=0) {
   ctx.save();
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
   ctx.translate(centerX, centerY);
+  ctx.rotate((offset * Math.PI) / 180);
   for (var i = 0; i < numBor; i++) {
-    ctx.rotate(((360 / numBor) * Math.PI) / 180);
-    ctx.drawImage(
-      bor_image,
-      -borHW / 2,
-      -cenHW / 2-borHW,
-      borHW,
-      borHW
-    );
+    ctx.rotate(((360 / numBor ) * Math.PI) / 180);
+    ctx.drawImage(bor_image, -borHW / 2, -cenHW / 2 - borHW-offset_h, borHW, borHW);
   }
   ctx.restore();
 }
@@ -98,57 +91,70 @@ function drawCenImage(ctx, image) {
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
   ctx.translate(centerX, centerY);
-  ctx.drawImage(
-    image,
-    -cenHW / 2,
-    -cenHW / 2,
-    cenHW,
-    cenHW
-  );
+  ctx.drawImage(image, -cenHW / 2, -cenHW / 2, cenHW, cenHW);
   ctx.restore();
 }
 
 function Hua() {
   const { huaState, dispatch } = useContext(HuaContext);
-  const makeFrom = useCallback(()=>huaState.cenImgSrc+huaState.corImgSrc+huaState.borImgSrc,[huaState]);
+  const makeFrom = useCallback(
+    () =>
+      huaState.cenImgSrc +
+      huaState.corImgSrc +
+      huaState.borImgSrc +
+      huaState.borImgSrcM +
+      huaState.typeHua,
+    [huaState]
+  );
   useEffect(() => {
     const f = async () => {
-      const [cenImg, corImg, borImg] = await loadImages([
+      const [cenImg, corImg, borImg,borImgM] = await loadImages([
         huaState.cenImgSrc,
         huaState.corImgSrc,
         huaState.borImgSrc,
+        huaState.borImgSrcM
       ]);
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-
+      if (huaState.typeHua === "m" || huaState.typeHua === "M") {
+      [cenHW,corHW,borHW,drawHW] = [139,120,91,412].map((e)=>ratio*e);
+      }else{
+        // type s
+        [cenHW, corHW, borHW, drawHW] = [160, 120, 100, 428].map((e) => ratio * e);
+      }
       canvas.width = drawHW;
       canvas.height = drawHW;
+      // 四角
+      await drawCorImages(ctx, corImg);
       // 中心
       drawCenImage(ctx, cenImg);
       // 中心周围
+      if (huaState.typeHua === "m" || huaState.typeHua === "M") {
+        drawBorImages(ctx, borImgM, 22.5,1/6*borHW);
+      }
       drawBorImages(ctx, borImg);
-      // 四角
-      await drawCorImages(ctx, corImg);
       dispatch({
-        type:huaStateAction.resultImg.url.set,
-        url:canvas.toDataURL()
+        type: huaStateAction.resultImg.url.set,
+        url: canvas.toDataURL(),
       });
-      dispatch(
-        {
-          type:huaStateAction.resultImg.from.set,
-          from:makeFrom(),
-        }
-      )
+      dispatch({
+        type: huaStateAction.resultImg.from.set,
+        from: makeFrom(),
+      });
     };
-    if(huaState.resultImg.from!=makeFrom()){
+    if (huaState.resultImg.from != makeFrom()) {
       f();
     }
     // else use cache data
-  }, [huaState,dispatch,makeFrom]);
+  }, [huaState, dispatch, makeFrom]);
 
-  if (huaState.typeHua === "s" || huaState.typeHua === "S") {
-  }
-  return <Canvas imgURL={huaState.resultImg.url} HW={huaState.canvasHW} numberImage={huaState.numberImage} />;
+  return (
+    <Canvas
+      imgURL={huaState.resultImg.url}
+      HW={huaState.canvasHW}
+      numberImage={huaState.numberImage}
+    />
+  );
 }
 
 export default Hua;

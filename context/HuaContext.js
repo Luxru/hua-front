@@ -12,8 +12,14 @@ export const huaStateAction = {
   cenImgSrc: {
     set: "cenImgSrc/set@cenImgSrc",
   },
+  corImgSrc: {
+    set: "corImgSrc/set@corImgSrc",
+  },
   borImgSrc: {
     set: "borImgSrc/set@borImgSrc",
+  },
+  borImgSrcM: {
+    set: "borImgSrcM/set@borImgSrcM",
   },
   resultImg: {
     from: {
@@ -45,10 +51,22 @@ const huaStateReducer = (huaState, action) => {
         cenImgSrc: action.cenImgSrc,
       };
     }
+    case huaStateAction.corImgSrc.set: {
+      return {
+        ...huaState,
+        corImgSrc: action.corImgSrc,
+      };
+    }
     case huaStateAction.borImgSrc.set: {
       return {
         ...huaState,
         borImgSrc: action.borImgSrc,
+      };
+    }
+    case huaStateAction.borImgSrcM.set: {
+      return {
+        ...huaState,
+        borImgSrcM: action.borImgSrcM,
       };
     }
     case huaStateAction.resultImg.url.set: {
@@ -81,6 +99,7 @@ export default function Context({ children }) {
     cenImgSrc: "/assets/cen.png",
     corImgSrc: "/assets/cor.png",
     borImgSrc: "/assets/bor.png",
+    borImgSrcM:"/assets/bor.png",
     numberImage: 1,
     typeHua: "s",
     resultImg: {

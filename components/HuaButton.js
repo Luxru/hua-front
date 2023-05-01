@@ -1,17 +1,17 @@
-import footer_img from "@/public/assets/footer_menu.png";
-import footer_clicked_img from "@/public/assets/footer_menu_red.png";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-function HuaButton({ onClick, id, idClicked, ratio }) {
+function HuaButton({ onClick, id, src, idClicked, ratio, imgHW }) {
   return (
     <button className="w-fit hover:bg-gray-200 active:bg-gray-100 rounded-md inline-block active:translate-y-1">
       <Image
         id={id}
         onClick={onClick}
-        src={idClicked == id && ratio ? footer_clicked_img : footer_img}
+        src={src}
         alt={""}
+        width={imgHW}
+        height={imgHW}
       />
     </button>
   );
@@ -19,13 +19,18 @@ function HuaButton({ onClick, id, idClicked, ratio }) {
 
 // props接受一个参数index，会被告知第几个元素被点击
 function HuaButtonGroup({
-  className = "space-x-2",
+  className = "space-x-4",
   numButton = 1,
   onItemClick = undefined,
   ratio = false,
   initIndex = "0",
+  imgArr = [],
+  imgHW = 20,
 }) {
   const [idClicked, setidClicked] = useState(initIndex);
+  if (imgArr.length != numButton || imgArr == 0) {
+    return <></>;
+  }
   const onClick = (event) => {
     if (onItemClick !== undefined) {
       onItemClick(event.currentTarget.id);
@@ -41,6 +46,8 @@ function HuaButtonGroup({
         idClicked={idClicked}
         onClick={onClick}
         ratio={ratio}
+        src={imgArr[i]}
+        imgHW={imgHW}
       />
     );
   }
