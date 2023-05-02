@@ -76,7 +76,7 @@ function Menu({ infoName, imgArr, onItemClick, typeHua }) {
 function Header({ typeHua, onItemClick }) {
   return (
     <>
-      <div className="flex justify-between px-4">
+      <div className="flex justify-between">
         <Logo />
         <div className="flex space-x-6 items-center">
           <div
@@ -89,7 +89,7 @@ function Header({ typeHua, onItemClick }) {
             <SmHuaSvg />
           </div>
           <div
-            className={`hover:cursor-pointer ${
+            className={`hover:cursor-pointer px-4 ${
               typeHua == "m" ? "text-[#00A39B]" : "text-black"
             }`}
             type="m"
