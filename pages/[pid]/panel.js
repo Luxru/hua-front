@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import HuaButtonGroup from "@/components/HuaButton";
 import Hua from "@/components/Hua";
-import menu_ico from "@/public/assets/logo_img.svg";
+import menu_ico from "@/public/assets/logo.svg";
 import NumProgressBar from "@/components/NumProgressBar";
 
 import Head from "next/head";
@@ -20,11 +20,7 @@ import ErrorPage from "@/components/ErrorPage";
 function Info({ info, className = "" }) {
   return (
     <div className={`${className} space-x-2 pr-4 flex items-center`}>
-      <Image
-        src={menu_ico}
-        alt="menu_ico"
-        width={40}
-      />
+      <Image src={menu_ico} alt="menu_ico" width={40} />
       <p className="font-FZLT text-2xl">{info}</p>
     </div>
   );
@@ -118,13 +114,13 @@ export default function Home() {
   }
 
   const genIconArray = (type) => {
-    const workPathObj = pathInfo[pid]['contents'];
-    const dirObj = workPathObj[type]['contents'];
+    const workPathObj = pathInfo[pid]["contents"];
+    const dirObj = workPathObj[type]["contents"];
     let imgArr = [];
     for (let i of Object.keys(dirObj)) {
-      for (let j of Object.keys(dirObj[i]['contents'])) {
-        if (dirObj[i]['contents'][j]['type']=='file'){
-          imgArr.push(dirObj[i]['contents'][j]['filepath']);
+      for (let j of Object.keys(dirObj[i]["contents"])) {
+        if (dirObj[i]["contents"][j]["type"] == "file") {
+          imgArr.push(dirObj[i]["contents"][j]["filepath"]);
         }
       }
     }
@@ -146,39 +142,43 @@ export default function Home() {
   };
 
   const onCanvasItem = (id, type) => {
-    const workPathObj = pathInfo[pid]['contents'];
+    const workPathObj = pathInfo[pid]["contents"];
     const dirType = type == "花瓣m" ? "花瓣" : type;
-    const dirObj = workPathObj[dirType]['contents'];
+    const dirObj = workPathObj[dirType]["contents"];
     const dirID = Object.keys(dirObj)[Number(id)];
-    const imgDirObj = dirObj[dirID]['contents'][dirID]['contents'];
+    const imgDirObj = dirObj[dirID]["contents"][dirID]["contents"];
     const keys = Object.keys(imgDirObj);
     let action;
     switch (type) {
       case "花心": {
         action = {
           type: huaStateAction.cenImgSrc.set,
-          cenImgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]]['filepath'],
+          cenImgSrc:
+            imgDirObj[keys[(keys.length * Math.random()) << 0]]["filepath"],
         };
         break;
       }
       case "花瓣": {
         action = {
           type: huaStateAction.borImgSrc.set,
-          borImgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]]['filepath'],
+          borImgSrc:
+            imgDirObj[keys[(keys.length * Math.random()) << 0]]["filepath"],
         };
         break;
       }
       case "花瓣m": {
         action = {
           type: huaStateAction.borImgSrcM.set,
-          borImgSrcM: imgDirObj[keys[(keys.length * Math.random()) << 0]]['filepath'],
+          borImgSrcM:
+            imgDirObj[keys[(keys.length * Math.random()) << 0]]["filepath"],
         };
         break;
       }
       case "角隅": {
         action = {
           type: huaStateAction.corImgSrc.set,
-          corImgSrc: imgDirObj[keys[(keys.length * Math.random()) << 0]]['filepath'],
+          corImgSrc:
+            imgDirObj[keys[(keys.length * Math.random()) << 0]]["filepath"],
         };
         break;
       }
@@ -234,7 +234,7 @@ export default function Home() {
                 onItemClick={onCanvasItem}
               />
               <Link
-                href={{ pathname: "/[pid]/preview", query: { pid: pid } }}
+                href={{ pathname: "/[pid]/view", query: { pid: pid } }}
                 className="w-fit self-end"
               >
                 <p className="font-FZLT text-2xl text-center px-8 border-2 border-black rounded-2xl active:translate-y-1">
@@ -244,7 +244,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Footer href={"/"} />
+        <Footer href={"/menu"} />
       </div>
     </>
   );

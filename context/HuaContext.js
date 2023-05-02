@@ -96,10 +96,10 @@ const huaStateReducer = (huaState, action) => {
 export default function Context({ children }) {
   const [huaState, dispatch] = useReducer(huaStateReducer, {
     canvasHW: 450,
-    cenImgSrc: "/assets/cen.png",
-    corImgSrc: "/assets/cor.png",
-    borImgSrc: "/assets/bor.png",
-    borImgSrcM:"/assets/bor.png",
+    cenImgSrc: "/assets/default_hua/cen.png",
+    corImgSrc: "/assets/default_hua//cor.png",
+    borImgSrc: "/assets/default_hua/bor.png",
+    borImgSrcM: "/assets/default_hua/bor.png",
     numberImage: 1,
     typeHua: "s",
     resultImg: {

@@ -19,12 +19,9 @@ const Canvas = ({ numberImage, HW, imgURL }) => {
   }, [imgURL, HW, numberImage]);
 
   return (
-    <canvas
-      className="shadow-xl"
-      ref={canvas}
-      height={HW}
-      width={HW}
-    />
+    <div className="overflow-auto shadow-xl max-w-full max-h-full">
+      <canvas ref={canvas} height={HW} width={HW} />
+    </div>
   );
 };
 

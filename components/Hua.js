@@ -3,13 +3,12 @@ import Canvas from "@/components/Canvas";
 
 import { useContext } from "react";
 import { HuaContext, huaStateAction } from "@/context/HuaContext";
+
 const ratio = 2;
 const numBor = 8;
-// Type s
 var cenHW, corHW, borHW, drawHW;
 
-
-async function loadImages(imageURLs) {
+export async function loadImages(imageURLs) {
   // 创建一个Promise数组，每个Promise表示一张图片的加载
   const imagePromises = imageURLs.map((url) => {
     return new Promise((resolve, reject) => {
@@ -73,15 +72,21 @@ async function drawCorImages(ctx, image) {
   });
 }
 
-function drawBorImages(ctx, bor_image, offset = 0,offset_h=0) {
+function drawBorImages(ctx, bor_image, offset = 0, offset_h = 0) {
   ctx.save();
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
   ctx.translate(centerX, centerY);
   ctx.rotate((offset * Math.PI) / 180);
   for (var i = 0; i < numBor; i++) {
-    ctx.rotate(((360 / numBor ) * Math.PI) / 180);
-    ctx.drawImage(bor_image, -borHW / 2, -cenHW / 2 - borHW-offset_h, borHW, borHW);
+    ctx.rotate(((360 / numBor) * Math.PI) / 180);
+    ctx.drawImage(
+      bor_image,
+      -borHW / 2,
+      -cenHW / 2 - borHW - offset_h,
+      borHW,
+      borHW
+    );
   }
   ctx.restore();
 }
@@ -108,19 +113,23 @@ function Hua() {
   );
   useEffect(() => {
     const f = async () => {
-      const [cenImg, corImg, borImg,borImgM] = await loadImages([
+      const [cenImg, corImg, borImg, borImgM] = await loadImages([
         huaState.cenImgSrc,
         huaState.corImgSrc,
         huaState.borImgSrc,
-        huaState.borImgSrcM
+        huaState.borImgSrcM,
       ]);
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       if (huaState.typeHua === "m" || huaState.typeHua === "M") {
-      [cenHW,corHW,borHW,drawHW] = [139,120,91,412].map((e)=>ratio*e);
-      }else{
+        [cenHW, corHW, borHW, drawHW] = [139, 120, 91, 412].map(
+          (e) => ratio * e
+        );
+      } else {
         // type s
-        [cenHW, corHW, borHW, drawHW] = [160, 120, 100, 428].map((e) => ratio * e);
+        [cenHW, corHW, borHW, drawHW] = [160, 120, 100, 428].map(
+          (e) => ratio * e
+        );
       }
       canvas.width = drawHW;
       canvas.height = drawHW;
@@ -130,7 +139,7 @@ function Hua() {
       drawCenImage(ctx, cenImg);
       // 中心周围
       if (huaState.typeHua === "m" || huaState.typeHua === "M") {
-        drawBorImages(ctx, borImgM, 22.5,1/6*borHW);
+        drawBorImages(ctx, borImgM, 22.5, (1 / 6) * borHW);
       }
       drawBorImages(ctx, borImg);
       dispatch({
