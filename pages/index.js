@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 import pathInfo from "@/path.config";
 
-export default function Home() {
+export async function getStaticProps(){
   let homeImgArr = [];
 
   for (let k in pathInfo) {
@@ -19,7 +19,15 @@ export default function Home() {
       });
     }
   }
+  return {
+    props:{
+      homeImgArr
+    }
+  }
+}
 
+export default function Home({homeImgArr}) {
+  
   const listEle = homeImgArr.map(({ pid, src }, index) => {
     const imgHW = 150;
     return (

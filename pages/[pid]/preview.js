@@ -30,16 +30,19 @@ export default function Home() {
               <p className="font-thin text-[20px]">baoxiang pattern</p>
               <p className="font-normal text-[30px]">0063986</p>
               <div className="flex space-x-1">
-                <p className="font-FZLT text-[25px] w-fit px-5 text-center border-2 border-black rounded-2xl active:translate-y-1">
+                <p className="font-FZLT text-[25px] w-fit px-5 text-center border-2 border-black rounded-2xl active:translate-y-1 hover:cursor-pointer">
                   场景预览
                 </p>
-                <p className="font-FZLT text-[25px] w-fit px-5  text-center border-2 border-black rounded-2xl active:translate-y-1" onClick={e=>{
-                  const createEl = document.createElement('a');
-                  createEl.href = huaState.resultImg.url;
-                  createEl.download = "baoxiang-pattern";
-                  createEl.click();
-                  createEl.remove();
-                }}>
+                <p
+                  className="font-FZLT text-[25px] w-fit px-5  text-center border-2 border-black rounded-2xl active:translate-y-1 hover:cursor-pointer"
+                  onClick={(e) => {
+                    const createEl = document.createElement("a");
+                    createEl.href = huaState.resultImg.url;
+                    createEl.download = "baoxiang-pattern";
+                    createEl.click();
+                    createEl.remove();
+                  }}
+                >
                   导出
                 </p>
               </div>
