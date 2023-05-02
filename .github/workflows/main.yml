@@ -60,10 +60,9 @@ jobs:
             ls
             echo ------------------------BEFORE BUILD STOP ------------------------
             pm2 ps
-            pm2 stop all
+            pm2 delete all
             echo ------------------------AFTER BUILD STOP ------------------------
             pm2 ps
             pm2 start ecosystem.config.js
             echo ------------------------AFTER RUN ------------------------
             pm2 ps
-            echo $RSYNC_STDOUT
