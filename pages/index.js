@@ -18,10 +18,10 @@ export default function Home() {
         onClick={() => router.push("/menu")}
       >
         <div className="flex justify-between px-2">
-          <Image src={header_img} alt="Baoxiang"></Image>
+          <Image src={header_img} alt="Baoxiang" blurDataURL={header_img.blurDataURL}></Image>
           <Image src={hua_icon} alt="Hua" className="w-[40px]"></Image>
         </div>
-        <div className="flex-1 flex items-center">
+        <div className="flex-1 flex items-center min-w-full min-h-[50%]">
           <video className="w-full" autoPlay loop muted>
             <source src="/assets/index/bg.mp4" type="video/mp4"></source>
           </video>

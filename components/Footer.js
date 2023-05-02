@@ -16,6 +16,7 @@ export default function Footer({ href }) {
             alt="footer"
             className="w-12 h-12  p-1"
             priority
+            blurDataURL={ret_button.blurDataURL}
           />
           <p className="font-bold text-[17px]">返回</p>
         </div>

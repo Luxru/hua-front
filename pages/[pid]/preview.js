@@ -7,6 +7,9 @@ import { useRef } from "react";
 import { useContext } from "react";
 import { HuaContext } from "@/context/HuaContext";
 import { useEffect } from "react";
+import left_img from "@/public/assets/preview/left.png"
+import mid_img from "@/public/assets/preview/mid.png"
+import right_img from "@/public/assets/preview/right.png"
 
 export default function Home() {
   const router = useRouter();
@@ -19,11 +22,12 @@ export default function Home() {
     const context = canvas.current.getContext("2d");
     async function f() {
       const [l_img, m_img, r_img, hua_img] = await loadImages([
-        "/assets/preview/left.png",
-        "/assets/preview/mid.png",
-        "/assets/preview/right.png",
+        left_img.src,
+        mid_img.src,
+        right_img.src,
         huaState.resultImg.url,
       ]);
+      console.log("image loaded");
       const tW = (canW > canH ? canW : canH) / numberImage;
       context.globalAlpha = 1;
       for (let i = 0; i < numberImage; i++) {
