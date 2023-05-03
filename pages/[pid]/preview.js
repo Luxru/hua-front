@@ -7,9 +7,10 @@ import { useRef } from "react";
 import { useContext } from "react";
 import { HuaContext } from "@/context/HuaContext";
 import { useEffect } from "react";
-import left_img from "@/public/assets/preview/left.png"
-import mid_img from "@/public/assets/preview/mid.png"
-import right_img from "@/public/assets/preview/right.png"
+import left_img from "@/public/assets/preview/left.png";
+import mid_img from "@/public/assets/preview/mid.png";
+import right_img from "@/public/assets/preview/right.png";
+
 
 export default function Home() {
   const router = useRouter();
@@ -17,8 +18,9 @@ export default function Home() {
   const { huaState, _ } = useContext(HuaContext);
   const [canW, canH] = [1000, 500];
   const fillRectW = 40;
+  const { pid } = router.query;
   useEffect(() => {
-    const numberImage = 20;
+    const numberImage = 24;
     const context = canvas.current.getContext("2d");
     async function f() {
       const [l_img, m_img, r_img, hua_img] = await loadImages([
@@ -27,7 +29,6 @@ export default function Home() {
         right_img.src,
         huaState.resultImg.url,
       ]);
-      console.log("image loaded");
       const tW = (canW > canH ? canW : canH) / numberImage;
       context.globalAlpha = 1;
       for (let i = 0; i < numberImage; i++) {
@@ -50,10 +51,12 @@ export default function Home() {
         current_x += fillRectW;
       }
     }
-    f();
-    return;
+    f().catch(
+      (e)=>{
+        console.log(e);
+      }
+    );
   }, [huaState, canW, canH]);
-  const { pid } = router.query;
   return (
     <>
       <Head>
@@ -62,8 +65,12 @@ export default function Home() {
       <div className="bg-white w-full h-full flex flex-col">
         <Logo />
         <div className="flex-1 flex items-center justify-center">
-          <div className="overflow-auto max-w-full max-h-full">
-            <canvas ref={canvas} height={canH} width={canW} />
+          <div className={`overflow-auto max-w-full max-h-full`}>
+            <canvas
+              ref={canvas}
+              height={canH}
+              width={canW}
+            />
           </div>
         </div>
         <Footer href={{ pathname: "/[pid]/view", query: { pid: pid } }} />

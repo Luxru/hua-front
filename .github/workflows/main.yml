@@ -63,6 +63,6 @@ jobs:
             pm2 delete all
             echo ------------------------AFTER BUILD STOP ------------------------
             pm2 ps
-            pm2 start ecosystem.config.js
+            pm2 start ecosystem.config.js --env production
             echo ------------------------AFTER RUN ------------------------
             pm2 ps

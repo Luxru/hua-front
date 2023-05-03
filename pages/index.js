@@ -18,7 +18,7 @@ export default function Home() {
         onClick={() => router.push("/menu")}
       >
         <div className="flex justify-between px-2">
-          <Image src={header_img} alt="Baoxiang" placeholder="blur"></Image>
+          <Image src={header_img} alt="Baoxiang"></Image>
           <Image src={hua_icon} alt="Hua" className="w-[40px]"></Image>
         </div>
         <div className="flex-1 flex items-center min-w-full min-h-[50%]">
