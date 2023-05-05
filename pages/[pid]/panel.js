@@ -14,6 +14,7 @@ import { HuaContext, huaStateAction } from "@/context/HuaContext";
 import { SmHuaSvg, MHuaSvg } from "@/components/HuaSvg";
 
 import pathInfo from "@/path.config";
+import { nameInfo } from "@/path.config";
 import { useRouter } from "next/router";
 import ErrorPage from "@/components/ErrorPage";
 
@@ -26,9 +27,18 @@ function Info({ info, className = "" }) {
   );
 }
 
-function Menu({ infoName, imgArr, onItemClick, typeHua }) {
+function Menu({ infoName, imgObjArr, onItemClick, typeHua }) {
   const onItemClickBind = (id) => onItemClick(id, infoName);
   const imgHW = 45;
+  const btnG = (
+    <HuaButtonGroup
+      numButton={imgObjArr.length}
+      onItemClick={onItemClickBind}
+      imgArr={imgObjArr.map((v) => v.filepath)}
+      textArr={imgObjArr.map((v) => v.name)}
+      imgHW={imgHW}
+    />
+  );
   if ("花瓣" == infoName && typeHua == "m") {
     return (
       <div className="flex space-x-4">
@@ -38,21 +48,17 @@ function Menu({ infoName, imgArr, onItemClick, typeHua }) {
             <p className="bg-black text-white rounded-full flex justify-center items-center text-sm w-5 h-5">
               1
             </p>
-            <HuaButtonGroup
-              numButton={imgArr.length}
-              onItemClick={onItemClickBind}
-              imgArr={imgArr}
-              imgHW={imgHW}
-            />
+            {btnG}
           </div>
           <div className="flex items-center space-x-4 lg:space-x-8">
             <p className="bg-black text-white rounded-full flex justify-center items-center text-sm w-5 h-5">
               2
             </p>
             <HuaButtonGroup
-              numButton={imgArr.length}
+              numButton={imgObjArr.length}
               onItemClick={(id) => onItemClick(id, "花瓣m")}
-              imgArr={imgArr}
+              imgArr={imgObjArr.map((v) => v.filepath)}
+              textArr={imgObjArr.map((v) => v.name)}
               imgHW={imgHW}
             />
           </div>
@@ -63,12 +69,7 @@ function Menu({ infoName, imgArr, onItemClick, typeHua }) {
   return (
     <div className="flex space-x-4 lg:space-x-8 items-center">
       <Info info={infoName} />
-      <HuaButtonGroup
-        numButton={imgArr.length}
-        onItemClick={onItemClickBind}
-        imgArr={imgArr}
-        imgHW={imgHW}
-      />
+      {btnG}
     </div>
   );
 }
@@ -116,18 +117,21 @@ export default function Home() {
   const genIconArray = (type) => {
     const workPathObj = pathInfo[pid]["contents"];
     const dirObj = workPathObj[type]["contents"];
-    let imgArr = [];
+    let imgObjArr = [];
     for (let i of Object.keys(dirObj)) {
       for (let j of Object.keys(dirObj[i]["contents"])) {
         if (dirObj[i]["contents"][j]["type"] == "file") {
-          imgArr.push(dirObj[i]["contents"][j]["filepath"]);
+          imgObjArr.push({
+            name: nameInfo[j],
+            filepath: dirObj[i]["contents"][j]["filepath"],
+          });
         }
       }
     }
-    return imgArr;
+    return imgObjArr;
   };
 
-  const btnImgArr = {
+  const btnimgObjArr = {
     cenImgs: genIconArray("花心"),
     borImgs: genIconArray("花瓣"),
     corImgs: genIconArray("角隅"),
@@ -219,18 +223,18 @@ export default function Home() {
               </div>
               <Menu
                 infoName={"花心"}
-                imgArr={btnImgArr.cenImgs}
+                imgObjArr={btnimgObjArr.cenImgs}
                 onItemClick={onCanvasItem}
               />
               <Menu
                 infoName={"花瓣"}
-                imgArr={btnImgArr.borImgs}
+                imgObjArr={btnimgObjArr.borImgs}
                 onItemClick={onCanvasItem}
                 typeHua={typeHua}
               />
               <Menu
                 infoName={"角隅"}
-                imgArr={btnImgArr.corImgs}
+                imgObjArr={btnimgObjArr.corImgs}
                 onItemClick={onCanvasItem}
               />
               <Link

@@ -2,19 +2,20 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-function HuaButton({ onClick, id, src, idClicked, ratio, imgHW }) {
+function HuaButton({ onClick, id, src, text, idClicked, ratio, imgHW }) {
   return (
-    <button className="w-fit hover:bg-gray-200 active:bg-gray-100 rounded-md inline-block active:translate-y-1">
-      <Image
-        id={id}
-        onClick={onClick}
-        src={src}
-        alt={""}
-        width={imgHW}
-        height={imgHW}
-        priority
-      />
-    </button>
+    <div className="flex flex-col items-center justify-between w-fit h-full hover:cursor-pointer hover:bg-gray-200 active:bg-gray-100 rounded-md active:translate-y-1">
+        <Image
+          id={id}
+          onClick={onClick}
+          src={src}
+          alt={""}
+          width={imgHW}
+          height={imgHW}
+          priority
+        />
+        <p className="text-base">{text}</p>
+    </div>
   );
 }
 
@@ -24,11 +25,13 @@ function HuaButtonGroup({
   onItemClick = undefined,
   ratio = false,
   initIndex = "0",
-  imgArr = [],
+  imgArr = null,
+  textArr = null,
   imgHW = 20,
 }) {
   const [idClicked, setidClicked] = useState(initIndex);
-  if (imgArr.length != numButton || imgArr == 0) {
+  if (imgArr==null || textArr == null) {
+    throw "Bad props"
     return <></>;
   }
   const onClick = (event) => {
@@ -47,6 +50,7 @@ function HuaButtonGroup({
         onClick={onClick}
         ratio={ratio}
         src={imgArr[i]}
+        text = {textArr[i]}
         imgHW={imgHW}
       />
     );
