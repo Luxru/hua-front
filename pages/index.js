@@ -5,6 +5,7 @@ import header_img from "@/public/assets/index/index_header.svg";
 import hua_icon from "@/public/assets/index/hua_btn.svg";
 import footer_img from "@/public/assets/index/index_footer.png";
 import footer_icon from "@/public/assets/footer_icon.svg";
+import bg from "@/public/assets/index/bg.mp4"
 
 export default function Home() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Home() {
         </div>
         <div className="flex-1 flex items-center min-w-full min-h-[50%]">
           <video className="w-full" autoPlay loop muted>
-            <source src="/assets/index/bg.mp4" type="video/mp4"></source>
+            <source src={bg} type="video/mp4"></source>
           </video>
         </div>
         <div className="flex justify-between items-center px-2 relative">
